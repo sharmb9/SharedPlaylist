@@ -25,7 +25,14 @@ router.post('/', async (req, res) => {
     }
 })
 
-
+router.delete('/:song', async (req, res) => {
+    try {
+        const removedSong = await Playlist.deleteOne({ song: req.params.song })
+        res.json({ message: 'Song deleted' })
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
 
 
 module.exports = router

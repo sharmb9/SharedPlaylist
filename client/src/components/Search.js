@@ -1,12 +1,17 @@
-import React from 'react';
+import React from "react";
 
-const Search = () => {
-    return (
-        <div>
-            <input type="text" placeholder="Search for a playlist...">
-            </input>
-        </div>
-    );
-}
+const Search = (props) => {
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder={props.placeholder}
+        onChange={props.onSearchChange}
+        name={props.name}
+        value={props.value}
+      ></input>
+    </div>
+  );
+};
 
-export default Search
+export default Search;

@@ -3,15 +3,17 @@ import Playlist from './Playlist';
 
 /***
  * The playlist display is the container for all of the playlist cards.
- * @props playlist - a list of playlist objects
+ * @props playlist - an array of playlist objects
  */
 
 const PlaylistDisplay = (props) => {
     return (
         <div>
-            {props.playlists.map((playlist, index) => {
-                return (<Playlist key={playlist.id} playlist={playlist}/>)
-            })}
+            {props.playlists !== [] ? 
+                props.playlists.map((playlist, index) => {
+                    return (<Playlist key={index} playlist={playlist}/>)
+                })
+            : <h1>No playlists yet...</h1>}
         </div>
     )
 };

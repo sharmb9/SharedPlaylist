@@ -10,7 +10,7 @@ const PlaylistDisplay = (props) => {
     return (
         <div>
             {props.playlists.map((playlist, index) => {
-                return (<Playlist playlist={playlist}/>)
+                return (<Playlist key={playlist.id} playlist={playlist}/>)
             })}
         </div>
     )

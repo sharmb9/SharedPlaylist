@@ -11,7 +11,7 @@ const App = () => {
 
   const [playlists, setPlaylists] = useState([]);
 
-  // When mounting, pull the /playlists objects from the server. 
+  // When mounting, pull the /playlists objects from the server.
   useEffect(() => {
     const getPlaylists = async () => {
       try {
@@ -27,10 +27,9 @@ const App = () => {
 
   return (
     <div className="App">
-    <a href="http://localhost:8888">
-        <button>Connect To Spotify</button>
-      </a>
+      <a href="http://localhost:8888"> <button>Connect To Spotify</button> </a>
       <Search placeholder="Search a playlist..."/>
+      <AutoSearch/>
       <PlaylistDisplay playlists={playlists}/>
     </div>
   );

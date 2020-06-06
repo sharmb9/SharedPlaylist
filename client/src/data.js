@@ -1,12 +1,31 @@
 // Test data for playlist objects
 export default [
     {
-        title: "Playlist1"
+        name: "Playlist1",
+        tracks: [
+            {
+                name: 'Song1',
+                artists: [
+                    "Post", "S."
+                ],
+                id: "213467"
+            },
+            {
+                name: 'Song2',
+                artists: [
+                    "D.", "B."
+                ],
+                id: "113467"
+            }
+        ],
+        id: "876543"
     },
     {
-        title: "Playlist2"
+        name: "Playlist2",
+        id: "976543"
     },
     {
-        title: "Playlist3"
+        name: "Playlist3",
+        id: "63"
     }
 ]

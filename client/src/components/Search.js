@@ -1,15 +1,17 @@
-import React from 'react';
+import React from "react";
 
-const Search = () => {
+const Search = (props) => {
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder={props.placeholder}
+        onChange={props.onSearchChange}
+        name={props.name}
+        value={props.value}
+      ></input>
+    </div>
+  );
+};
 
-    // TODO: Inputting text searches the current playlist by name.
-
-    return (
-        <div>
-            <input type="text" placeholder="Search for a playlist...">
-            </input>
-        </div>
-    );
-}
-
-export default Search
+export default Search;

@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Search from './Search';
+import AutoSearch from './AutoSearch'
 import PlaylistDisplay from './PlaylistDisplay';
-import PlaylistForm from './PlaylistForm';
-
-// Data for testing purposes
-import data from '../data';
 
 /***
  * The App is the main component that holds all of the other components.
@@ -30,12 +27,11 @@ const App = () => {
 
   return (
     <div className="App">
-      <button>
-        Connect to Spotify
-      </button>
-      <Search/>
+    <a href="http://localhost:8888">
+        <button>Connect To Spotify</button>
+      </a>
+      <Search placeholder="Search a playlist..."/>
       <PlaylistDisplay playlists={playlists}/>
-      <PlaylistForm playlist={data[0]}/>
     </div>
   );
 }

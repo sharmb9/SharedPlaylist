@@ -23,46 +23,52 @@ const AutoSearch = () => {
   const [songsState, setSongsState] = useState({
     suggestedSongs: [],
   });
-  const { suggestedSongs } = songsState;
+  // const { suggestedSongs } = songsState;
 
   const [searchQueryState, setSearchQueryState] = useState({
-    searchQuery: " ",
+    searchQuery: "",
   });
   const { searchQuery } = searchQueryState;
 
+  // Updates searchQueryState state on target value change
   const onSearchChange = (e) => {
     setSearchQueryState({ searchQuery: e.target.value });
     // getSearchedTracks(searchQuery);
   };
 
+  // Updates suggestedSongs state
+  const setSuggestions = (trackArray) => {
+    // const newSongState = {
+    //   suggestedSongs: trackArray,
+    // };
+    setSongsState({ suggestedSongs: trackArray, });
+    console.log(songsState.suggestedSongs);
+  };
+
   useEffect(() => {
-    // getSearchedTracks(searchQuery)
-    const getSearchedTracks = async (searchQuery) => {
+    const getSearchedTracks = async (searchQueryState) => {
       if (getHashParams().access_token) {
         spotifyApi.setAccessToken(getHashParams().access_token);
       }
       try {
-        const res = await spotifyApi.search(searchQuery, ["track"]);
-        const songs = res.tracks.items.map((item) => item.name);
-        console.log(songs);
-        setSuggestions(songs);
-        // suggestions based on user input
-        // const filteredSongs = suggestedSongs.toLowerCase().filter((songs) => searchQuery.toLowerCase() > -1);
+        if (searchQuery) {
+          const res = await spotifyApi.search(searchQuery, ["track"]);
+          const songs = res.tracks.items.map((item) => item.name);
+          // *****console.log(songs);
+          setSuggestions(songs);
+        }
       } catch (error) {
         console.log(error.message);
       }
     };
-    getSearchedTracks(searchQuery)
-  }, []);
+    getSearchedTracks(searchQueryState);
+  }, [searchQueryState]);
 
-  const setSuggestions = (trackArray) => {
-    const newSongState = {
-      suggestedSongs: trackArray,
-    };
-    setSongsState({ newSongState });
-    // console.log(suggestedSongs);
-    // setSongsState({...songsState, suggestedSongs: trackArray });
-  };
+  const AutoSearchList = () => (
+    <ul className="list-group">
+      {songsState.suggestedSongs.map((song) => <li>{song}</li>)}
+    </ul>
+  );
 
   return (
     <div>
@@ -72,9 +78,7 @@ const AutoSearch = () => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {/* {suggestedSongs.map((song) => (
-        <p>{song}</p>
-      ))} */}
+      {songsState ? <AutoSearchList/> : <p>Not valid</p>}
     </div>
   );
 };

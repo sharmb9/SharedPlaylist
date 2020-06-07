@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {InputGroup, FormControl, Button, Card} from 'react-bootstrap';
 
 const PlaylistForm = (props) => {
-    const {playlist} = props;
-    
+
+    const [playlist, setPlaylist] = useState(null);
+
+    // const {playlist} = props;
+
+    // When the form loads, get the playlist from the URL.
+    useEffect(() => {
+        const getPlaylist = async () => {
+            try {
+                const response = await fetch(`/playlists/${props.playlistName}`);
+                setPlaylist(await response.json());
+            }
+            catch(error) {
+                console.error(error);
+            }
+        }
+        getPlaylist();
+    }, [props.playlistName]);
+
     const savePlaylist = () => {
         // TODO: Makes a POST request to the database to save the playlist or PUT if it exists already.
     }
@@ -20,7 +37,7 @@ const PlaylistForm = (props) => {
         // TODO: Adds song to the playlist.
    }
 
-    return (
+   const displayForm = () => (
         <div>
             <h1>{playlist.name}</h1>
             <div>
@@ -33,7 +50,7 @@ const PlaylistForm = (props) => {
                     </Button>
                </InputGroup>
                <Button>Save playlist on Spotify</Button>
-               {props.playlist.tracks.map((track, index) => { return (
+               {/* {playlist.tracks.map((track, index) => { return (
                    <Card key={track.id}>
                        <Card.Body>
                            <h3>
@@ -41,16 +58,30 @@ const PlaylistForm = (props) => {
                            </h3>
                            <h4>
                                {track.artists.map((artist, index) => {
-                                   return (`${artist} `)
+                                   return (`${artist}`)
                                })}
                            </h4>
                        </Card.Body>
                        <Button>X</Button>
                    </Card>
                )
-               })}
+               })} */}
+               {/* */}
+               <Card>
+                   <h4>{playlist.song}</h4>
+                   <h4>{playlist.artist}</h4>
+               </Card>
+               {/* */}
             </div>
             <Button>Save Playlist</Button>
+        </div>
+   );
+
+    return (
+        <div>
+           {playlist !== null ? displayForm() : 
+            <h4>No playlist...</h4>
+           } 
         </div>
     )
 };

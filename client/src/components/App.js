@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Search from './Search';
-import AutoSearch from './AutoSearch'
 import PlaylistDisplay from './PlaylistDisplay';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import PlaylistForm from './PlaylistForm';
 
 /***
  * The App is the main component that holds all of the other components.
@@ -23,14 +24,24 @@ const App = () => {
       }
     }
   getPlaylists();
-  });
+  }, []);
 
   return (
     <div className="App">
-      <a href="http://localhost:8888"> <button>Connect To Spotify</button> </a>
-      <Search placeholder="Search a playlist..."/>
-      <AutoSearch/>
-      <PlaylistDisplay playlists={playlists}/>
+      <a href="http://localhost:8888">
+          <button>Connect To Spotify</button>
+      </a>
+      <Router>
+        <Route exact={true} path="/">
+          <Search placeholder="Search a playlist..."/>
+          <AutoSearch/>
+          <PlaylistDisplay playlists={playlists}/>
+        </Route>
+        <Route path="/playlist/:playlistName" render={({match}) => (
+          <PlaylistForm playlistName={match.params.playlistName}/>
+        )}>
+        </Route>
+      </Router>
     </div>
   );
 }

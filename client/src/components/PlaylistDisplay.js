@@ -8,14 +8,23 @@ import {Link} from 'react-router-dom';
  */
 
 const PlaylistDisplay = (props) => {
+    const getHashParams = () => {
+      const hashParams = {};
+      let e,
+        r = /([^&;=]+)=?([^&;]*)/g,
+        q = window.location.hash.substring(1);
+      while ((e = r.exec(q))) {
+        hashParams[e[1]] = decodeURIComponent(e[2]);
+      }
+      return hashParams;
+    };
     return (
         <div>
-            {props.playlists !== [] ? 
+            {props.playlists !== [] ?
                 props.playlists.map((playlist, index) => {
                     return (
-                    <Link to={`/playlist/${playlist.song}`}>
-                        <Playlist key={index} playlist={playlist}>
-                        </Playlist>
+                    <Link key={index} to={`/playlist/${playlist.song}#access_token=${getHashParams().access_token}`}>
+                        <Playlist playlist={playlist}/>
                     </Link>
                     )
                 })

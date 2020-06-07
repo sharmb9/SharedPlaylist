@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {InputGroup, FormControl, Button, Card} from 'react-bootstrap';
+import AutoSearch from "./AutoSearch";
 
 const PlaylistForm = (props) => {
 
@@ -27,11 +28,12 @@ const PlaylistForm = (props) => {
 
     const savePlaylistOnSpotify = () => {
         // TODO: Saves the playlist to a user's spotify account if they're logged in.
+      console.log("test");
     }
 
-   const searchSong = (e) => {
-        // TODO: Searches for a song from Spotify's API based on the current input.
-   } 
+   // const searchSong = (e) => {
+   //      // Searches for a song from Spotify's API based on the current input.
+   // }
 
    const addSong = () => {
         // TODO: Adds song to the playlist.
@@ -42,14 +44,15 @@ const PlaylistForm = (props) => {
             <h1>{playlist.name}</h1>
             <div>
                <InputGroup>
-                    <FormControl 
-                        placeholder="Add a song..."
-                    />
+                    {/*<FormControl*/}
+                    {/*    placeholder="Add a song..."*/}
+                    {/*/>*/}
+                    <AutoSearch/>
                     <Button type="submit">
-                       Add 
+                       Add
                     </Button>
                </InputGroup>
-               <Button>Save playlist on Spotify</Button>
+               <Button onClick={() => savePlaylistOnSpotify()}>Save playlist on Spotify</Button>
                {/* {playlist.tracks.map((track, index) => { return (
                    <Card key={track.id}>
                        <Card.Body>
@@ -79,9 +82,9 @@ const PlaylistForm = (props) => {
 
     return (
         <div>
-           {playlist !== null ? displayForm() : 
+           {playlist !== null ? displayForm() :
             <h4>No playlist...</h4>
-           } 
+           }
         </div>
     )
 };

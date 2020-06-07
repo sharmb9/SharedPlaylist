@@ -37,13 +37,13 @@ const AutoSearch = () => {
   };
 
   // Updates suggestedSongs state
-  const setSuggestions = (trackArray) => {
-    // const newSongState = {
-    //   suggestedSongs: trackArray,
-    // };
-    setSongsState({ suggestedSongs: trackArray, });
-    console.log(songsState.suggestedSongs);
-  };
+  // const setSuggestions = (trackArray) => {
+  //   // const newSongState = {
+  //   //   suggestedSongs: trackArray,
+  //   // };
+  //   setSongsState({ suggestedSongs: trackArray, });
+  //   console.log(songsState.suggestedSongs);
+  // };
 
   useEffect(() => {
     const getSearchedTracks = async (searchQueryState) => {
@@ -55,18 +55,21 @@ const AutoSearch = () => {
           const res = await spotifyApi.search(searchQuery, ["track"]);
           const songs = res.tracks.items.map((item) => item.name);
           // *****console.log(songs);
-          setSuggestions(songs);
+          // setSuggestions(songs);
+          setSongsState({ suggestedSongs: songs, });
         }
       } catch (error) {
         console.log(error.message);
+        setSongsState({ suggestedSongs: undefined, });
       }
     };
     getSearchedTracks(searchQueryState);
-  }, [searchQueryState]);
+  }, [searchQuery, searchQueryState]);
 
+  let songkey = 0;
   const AutoSearchList = () => (
     <ul className="list-group">
-      {songsState.suggestedSongs.map((song) => <li>{song}</li>)}
+      {songsState.suggestedSongs.map((song) => <li key={songkey++}>{song}</li>)}
     </ul>
   );
 
@@ -78,7 +81,7 @@ const AutoSearch = () => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {songsState ? <AutoSearchList/> : <p>Not valid</p>}
+      {songsState.suggestedSongs ? <AutoSearchList/> : <p>Not valid</p>}
     </div>
   );
 };

@@ -12,9 +12,9 @@ const App = () => {
 
   const [playlists, setPlaylists] = useState([]);
 
-  // When mounting, pull the /playlists objects from the server. 
+  // When mounting, pull the /playlists objects from the server.
   useEffect(() => {
-    console.log(playlists);
+    // console.log(playlists);
     const getPlaylists = async () => {
       try {
         const response = await fetch('/playlists/');

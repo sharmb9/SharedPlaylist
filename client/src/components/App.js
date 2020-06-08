@@ -34,7 +34,6 @@ const App = () => {
       <Router>
         <Route exact={true} path="/">
           <Search placeholder="Search a playlist..."/>
-          <AutoSearch/>
           <PlaylistDisplay playlists={playlists}/>
         </Route>
         <Route path="/playlist/:playlistName" render={({match}) => (

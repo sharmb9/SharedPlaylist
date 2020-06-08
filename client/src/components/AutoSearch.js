@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Search from "./Search";
 import SpotifyWebApi from "spotify-web-api-js";
+import PlaylistPage from './PlaylistPage'
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -22,28 +23,36 @@ const AutoSearch = () => {
 
   const [songsState, setSongsState] = useState({
     suggestedSongs: [],
+    artists: [],
   });
-  // const { suggestedSongs } = songsState;
 
   const [searchQueryState, setSearchQueryState] = useState({
     searchQuery: "",
   });
   const { searchQuery } = searchQueryState;
 
+  const [playlistState, setPlaylistState] = useState({
+    songs:[],
+  })
+  // const{songs} = playlistState
+
   // Updates searchQueryState state on target value change
   const onSearchChange = (e) => {
     setSearchQueryState({ searchQuery: e.target.value });
-    // getSearchedTracks(searchQuery);
   };
 
   // Updates suggestedSongs state
-  const setSuggestions = (trackArray) => {
-    // const newSongState = {
-    //   suggestedSongs: trackArray,
-    // };
-    setSongsState({ suggestedSongs: trackArray, });
-    console.log(songsState.suggestedSongs);
+  const setSuggestions = (trackArray, artistArray) => {
+    setSongsState({ suggestedSongs: trackArray, artists: artistArray });
   };
+
+  // addds the song to playlistState
+  const addSong = (id) => {
+    // e.preventDefault();
+    const currentSong= songsState.suggestedSongs.find((song,index) => index===id);
+    setPlaylistState({songs:[...playlistState.songs,currentSong]})
+    console.log(playlistState.songs);
+  };    
 
   useEffect(() => {
     const getSearchedTracks = async (searchQueryState) => {
@@ -54,8 +63,10 @@ const AutoSearch = () => {
         if (searchQuery) {
           const res = await spotifyApi.search(searchQuery, ["track"]);
           const songs = res.tracks.items.map((item) => item.name);
-          // *****console.log(songs);
-          setSuggestions(songs);
+          const artistsArray = res.tracks.items.map((item) => item.artists);
+          const artists = artistsArray.map((artist) => artist[0].name);
+          // console.log(artists)
+          setSuggestions(songs, artists);
         }
       } catch (error) {
         console.log(error.message);
@@ -66,9 +77,17 @@ const AutoSearch = () => {
 
   const AutoSearchList = () => (
     <ul className="list-group">
-      {songsState.suggestedSongs.map((song) => <li>{song}</li>)}
+      {songsState.suggestedSongs.map((song,index) => (
+        <li key={index} className="list-group-item">{song}<button onClick={() => addSong(index)}>Add song</button></li>
+      ))}
     </ul>
   );
+
+  const PlaylistTable = () => (
+    <ul className="list-group">
+        {playlistState.songs.map( (item,index) => (<li key ={index} className="list-group-item">{item}</li>))}
+        </ul>
+  )
 
   return (
     <div>
@@ -78,7 +97,22 @@ const AutoSearch = () => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {songsState ? <AutoSearchList/> : <p>Not valid</p>}
+      {songsState ? (
+        <div>
+          <AutoSearchList />
+        </div>
+      ) : (
+        <div></div>
+      )}
+      {playlistState ? (
+        <div>
+          <PlaylistTable />
+        </div>
+      ) : (
+        <div></div>
+      )}
+
+
     </div>
   );
 };

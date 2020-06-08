@@ -14,7 +14,6 @@ const App = () => {
 
   // When mounting, pull the /playlists objects from the server.
   useEffect(() => {
-    // console.log(playlists);
     const getPlaylists = async () => {
       try {
         const response = await fetch('/playlists/');
@@ -35,6 +34,7 @@ const App = () => {
       <Router>
         <Route exact={true} path="/">
           <Search placeholder="Search a playlist..."/>
+          <AutoSearch/>
           <PlaylistDisplay playlists={playlists}/>
         </Route>
         <Route path="/playlist/:playlistName" render={({match}) => (

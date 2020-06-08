@@ -3,6 +3,7 @@ import Search from "./Search";
 import SpotifyWebApi from "spotify-web-api-js";
 import PlaylistPage from './PlaylistPage'
 
+
 const spotifyApi = new SpotifyWebApi();
 
 const AutoSearch = () => {
@@ -34,7 +35,6 @@ const AutoSearch = () => {
   const [playlistState, setPlaylistState] = useState({
     songs:[],
   })
-  // const{songs} = playlistState
 
   // Updates searchQueryState state on target value change
   const onSearchChange = (e) => {
@@ -78,19 +78,15 @@ const AutoSearch = () => {
   const AutoSearchList = () => (
     <ul className="list-group">
       {songsState.suggestedSongs.map((song,index) => (
-        <li key={index} className="list-group-item">{song}<button onClick={() => addSong(index)}>Add song</button></li>
+        <li className="list-group-item" key={index}>{song}<button onClick={() => addSong(index)}>Add song</button></li>
       ))}
     </ul>
   );
 
-  const PlaylistTable = () => (
-    <ul className="list-group">
-        {playlistState.songs.map( (item,index) => (<li key ={index} className="list-group-item">{item}</li>))}
-        </ul>
-  )
+
 
   return (
-    <div>
+    <div className="search-box">
       <Search
         value={searchQuery}
         onSearchChange={onSearchChange}
@@ -98,15 +94,13 @@ const AutoSearch = () => {
         name="searchQuery"
       />
       {songsState ? (
-        <div>
           <AutoSearchList />
-        </div>
       ) : (
         <div></div>
       )}
       {playlistState ? (
         <div>
-          <PlaylistTable />
+        <PlaylistPage list={playlistState.songs}/>
         </div>
       ) : (
         <div></div>

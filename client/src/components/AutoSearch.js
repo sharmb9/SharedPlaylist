@@ -42,11 +42,11 @@ const AutoSearch = () => {
   };
 
   // Updates suggestedSongs state
-  const setSuggestions = (trackArray, artistArray) => {
-    setSongsState({ suggestedSongs: trackArray, artists: artistArray });
-  };
+  //   const setSuggestions = (trackArray, artistArray) => {
+  //     setSongsState({ suggestedSongs: trackArray, artists: artistArray });
+  //   };
 
-  // addds the song to playlistState
+  // adds the song to playlistState
   const addSong = (id) => {
     // e.preventDefault();
     const currentSong= songsState.suggestedSongs.find((song,index) => index===id);
@@ -66,14 +66,17 @@ const AutoSearch = () => {
           const artistsArray = res.tracks.items.map((item) => item.artists);
           const artists = artistsArray.map((artist) => artist[0].name);
           // console.log(artists)
-          setSuggestions(songs, artists);
+          // *****console.log(songs);
+          // setSuggestions(songs);
+          setSongsState({ suggestedSongs: songs, artists: artists });
         }
       } catch (error) {
         console.log(error.message);
+        setSongsState({ suggestedSongs: undefined, });
       }
     };
     getSearchedTracks(searchQueryState);
-  }, [searchQueryState]);
+  }, [searchQuery, searchQueryState]);
 
   const AutoSearchList = () => (
     <ul className="list-group">
@@ -93,20 +96,18 @@ const AutoSearch = () => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {songsState ? (
+      {songsState.suggestedSongs ? (
           <AutoSearchList />
       ) : (
         <div></div>
       )}
-      {playlistState ? (
+      {playlistState.songs ? (
         <div>
         <PlaylistPage list={playlistState.songs}/>
         </div>
       ) : (
         <div></div>
       )}
-
-
     </div>
   );
 };

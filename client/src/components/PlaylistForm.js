@@ -48,9 +48,9 @@ const PlaylistForm = (props) => {
                     {/*    placeholder="Add a song..."*/}
                     {/*/>*/}
                     <AutoSearch/>
-                    <Button type="submit">
-                       Add
-                    </Button>
+                    {/*<Button type="submit">*/}
+                    {/*   Add*/}
+                    {/*</Button>*/}
                </InputGroup>
                <Button onClick={() => savePlaylistOnSpotify()}>Save playlist on Spotify</Button>
                {/* {playlist.tracks.map((track, index) => { return (

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// import { Button } from 'react-bootstrap';
 import Search from "./Search";
 import SpotifyWebApi from "spotify-web-api-js";
 import PlaylistPage from './PlaylistPage'
@@ -52,7 +53,7 @@ const AutoSearch = () => {
     const currentSong= songsState.suggestedSongs.find((song,index) => index===id);
     setPlaylistState({songs:[...playlistState.songs,currentSong]})
     console.log(playlistState.songs);
-  };    
+  };
 
   useEffect(() => {
     const getSearchedTracks = async (searchQueryState) => {
@@ -72,16 +73,19 @@ const AutoSearch = () => {
         }
       } catch (error) {
         console.log(error.message);
-        setSongsState({ suggestedSongs: undefined, });
+        setSongsState({ suggestedSongs: undefined, artists: undefined });
       }
     };
     getSearchedTracks(searchQueryState);
   }, [searchQuery, searchQueryState]);
 
   const AutoSearchList = () => (
+    // <div className="row">
     <ul className="list-group">
       {songsState.suggestedSongs.map((song,index) => (
-        <li className="list-group-item" key={index}>{song}<button onClick={() => addSong(index)}>Add song</button></li>
+        <li className="list-group-item" key={index}>{song} – {songsState.artists[index]}
+          <button type="submit" style={{float:"right", marginLeft:17}} onClick={() => addSong(index)}>Add song</button>
+        </li>
       ))}
     </ul>
   );
@@ -99,14 +103,14 @@ const AutoSearch = () => {
       {songsState.suggestedSongs ? (
           <AutoSearchList />
       ) : (
-        <div></div>
+        <div>No results</div>
       )}
       {playlistState.songs ? (
         <div>
         <PlaylistPage list={playlistState.songs}/>
         </div>
       ) : (
-        <div></div>
+        <div>Add songs to this playlist.</div>
       )}
     </div>
   );

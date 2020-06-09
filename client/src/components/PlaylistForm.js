@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {InputGroup, FormControl, Button, Card} from 'react-bootstrap';
+import {InputGroup, Row, Col, Container, Button, Card} from 'react-bootstrap';
 import AutoSearch from "./AutoSearch";
 
 const PlaylistForm = (props) => {
@@ -10,7 +10,7 @@ const PlaylistForm = (props) => {
 
     // When the form loads, get the playlist from the URL.
     useEffect(() => {
-        const getPlaylist = async () => {
+      (async function() {
             try {
                 const response = await fetch(`/playlists/${props.playlistName}`);
                 setPlaylist(await response.json());
@@ -18,8 +18,7 @@ const PlaylistForm = (props) => {
             catch(error) {
                 console.error(error);
             }
-        }
-        getPlaylist();
+      })();
     }, [props.playlistName]);
 
     const savePlaylist = () => {
@@ -40,19 +39,14 @@ const PlaylistForm = (props) => {
    }
 
    const displayForm = () => (
-        <div>
-            <h1>{playlist.name}</h1>
-            <div>
+       <Container fluid>
+        <Row>
+            <Col>
                <InputGroup>
-                    {/*<FormControl*/}
-                    {/*    placeholder="Add a song..."*/}
-                    {/*/>*/}
                     <AutoSearch/>
-                    {/*<Button type="submit">*/}
-                    {/*   Add*/}
-                    {/*</Button>*/}
                </InputGroup>
                <Button onClick={() => savePlaylistOnSpotify()}>Save playlist on Spotify</Button>
+            </Col>
                {/* {playlist.tracks.map((track, index) => { return (
                    <Card key={track.id}>
                        <Card.Body>
@@ -69,21 +63,24 @@ const PlaylistForm = (props) => {
                    </Card>
                )
                })} */}
-               {/* */}
-               <Card>
-                   <h4>{playlist.song}</h4>
-                   <h4>{playlist.artist}</h4>
-               </Card>
-               {/* */}
-            </div>
-            <Button>Save Playlist</Button>
-        </div>
+            <Col>
+              <h2>{playlist.title}</h2>
+              {playlist.songs.map(song => { return (
+                <Card>
+                  <Card.Title>{song[0]}</Card.Title>
+                  <Card.Text>{song[1]}</Card.Text>
+                </Card>
+              )})}
+              <Button>Save Playlist</Button>
+            </Col>
+        </Row>
+         </Container>
    );
 
     return (
         <div>
            {playlist !== null ? displayForm() :
-            <h4>No playlist...</h4>
+             <h4>No playlist...</h4>
            }
         </div>
     )

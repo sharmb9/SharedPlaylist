@@ -43,7 +43,7 @@ router.put("/:song", async (req, res) => {
     }
 })
 
-router.get("/:song", async (req, res) => {
+router.get("/:playlistName/:song", async (req, res) => {
     try {
         const song = await Playlist.findOne({ song: req.params.song })
         res.json(song)
@@ -52,5 +52,13 @@ router.get("/:song", async (req, res) => {
     }
 })
 
+router.get("/:playlistName", async (req, res) => {
+    try {
+        const playlist = await Playlist.findOne({ title: req.params.playlistName })
+        res.json(playlist)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
 
 module.exports = router

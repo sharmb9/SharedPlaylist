@@ -14,7 +14,7 @@ const App = () => {
 
   // When mounting, pull the /playlists objects from the server.
   useEffect(() => {
-    const getPlaylists = async () => {
+    (async function() {
       try {
         const response = await fetch('/playlists/');
         setPlaylists(await response.json());
@@ -22,8 +22,7 @@ const App = () => {
       catch(error) {
         console.error(error);
       }
-    }
-  getPlaylists();
+    })();
   }, []);
 
   return (

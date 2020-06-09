@@ -56,7 +56,7 @@ const AutoSearch = () => {
   };
 
   useEffect(() => {
-    const getSearchedTracks = async (searchQueryState) => {
+    (async function(searchQueryState) {
       if (getHashParams().access_token) {
         spotifyApi.setAccessToken(getHashParams().access_token);
       }
@@ -75,12 +75,10 @@ const AutoSearch = () => {
         console.log(error.message);
         setSongsState({ suggestedSongs: undefined, artists: undefined });
       }
-    };
-    getSearchedTracks(searchQueryState);
+    })();
   }, [searchQuery, searchQueryState]);
 
   const AutoSearchList = () => (
-    // <div className="row">
     <ul className="list-group">
       {songsState.suggestedSongs.map((song,index) => (
         <li className="list-group-item" key={index}>{song} – {songsState.artists[index]}

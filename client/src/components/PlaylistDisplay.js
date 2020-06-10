@@ -23,7 +23,7 @@ const PlaylistDisplay = (props) => {
             {props.playlists !== [] ?
                 props.playlists.map((playlist, index) => {
                     return (
-                    <Link key={index} to={`/playlist/${playlist.song}#access_token=${getHashParams().access_token}`}>
+                    <Link key={index} to={`/playlist/${playlist.title}#access_token=${getHashParams().access_token}`}>
                         <Playlist playlist={playlist}/>
                     </Link>
                     )

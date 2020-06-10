@@ -17,8 +17,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint:all": "npx eslint \"./src/components/**.js\"",
-    "lint:fix": "npx eslint --fix \"./src/components/**.js\"",
+    "lint:all": "npx eslint \"./src/components/**.jsx\"",
+    "lint:fix": "npx eslint --fix \"./src/components/**.jsx\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

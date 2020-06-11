@@ -77,7 +77,7 @@ app.get('/callback', function(req, res) {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: redirect_uri,
+        redirect_uri: req.protocol + '://' + req.get('host') + '/callback',
         grant_type: 'authorization_code'
       },
       headers: {

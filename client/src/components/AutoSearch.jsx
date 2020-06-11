@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 // import { Button } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { FormControl } from 'react-bootstrap';
-import PlaylistPage from './PlaylistPage';
-
 
 /**
    * Obtains parameters from the hash of the URL

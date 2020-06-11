@@ -22,8 +22,21 @@ const PlaylistForm = (props) => {
   }, [playlistName]);
 
   const savePlaylist = () => {
-    // TODO: Makes a POST request to the database to save the playlist or PUT if it exists already.
-    console.log('not saved!');
+    (async function () {
+      try {
+        const response = await fetch(`http://${window.location.host}/playlists/${playlist.title}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // eslint-disable-next-line no-underscore-dangle
+          body: JSON.stringify({ songs: playlist.songs }),
+        });
+        console.log(await response.json());
+      } catch (error) {
+        console.error(error);
+      }
+    }());
   };
 
   const savePlaylistOnSpotify = () => {
@@ -37,11 +50,20 @@ const PlaylistForm = (props) => {
     const uuid = songList.ids[id];
     let { songs } = playlist;
     songs = [...songs, [currentSong, artists, uuid]];
-    setPlaylist({ title: playlist.title, songs });
+    setPlaylist({
+      // eslint-disable-next-line no-underscore-dangle
+      title: playlist.title, _id: playlist._id, author: playlist.author, songs,
+    });
   };
 
   const removeSong = (id) => {
-    setPlaylist({ title: playlist.title, songs: playlist.songs.filter((s) => s[2] !== id) });
+    setPlaylist({
+      title: playlist.title,
+      // eslint-disable-next-line no-underscore-dangle
+      _id: playlist._id,
+      author: playlist.author,
+      songs: playlist.songs.filter((s) => s[2] !== id),
+    });
   };
 
   const displayForm = () => (
@@ -51,7 +73,7 @@ const PlaylistForm = (props) => {
           <InputGroup>
             <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
           </InputGroup>
-          <Button onClick={() => savePlaylistOnSpotify()}>Save playlist on Spotify</Button>
+          <Button disabled onClick={() => savePlaylistOnSpotify()}>Save playlist on Spotify</Button>
         </Col>
         <Col>
           <h2>{playlist.title}</h2>

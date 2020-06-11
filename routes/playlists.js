@@ -43,6 +43,16 @@ router.put("/:song", async (req, res) => {
     }
 })
 
+router.post("/:playlistName", async (req, res) => {
+    try {
+        console.log(req.body);
+        await Playlist.updateOne({ title: req.params.playlistName }, { $set: { songs: req.body.songs } })
+        res.json({ message: 'Playlist Updated' })
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 router.get("/:playlistName/:song", async (req, res) => {
     try {
         const song = await Playlist.findOne({ song: req.params.song })

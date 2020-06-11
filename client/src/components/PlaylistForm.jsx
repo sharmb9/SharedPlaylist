@@ -31,48 +31,37 @@ const PlaylistForm = (props) => {
     console.log('test');
   };
 
-  // const searchSong = (e) => {
-  //      // Searches for a song from Spotify's API based on the current input.
-  // }
+  const addSong = (songList, id) => {
+    const currentSong = songList.suggestedSongs[id];
+    const artists = songList.artists[id];
+    const uuid = songList.ids[id];
+    let { songs } = playlist;
+    songs = [...songs, [currentSong, artists, uuid]];
+    setPlaylist({ title: playlist.title, songs });
+  };
 
-  // const addSong = () => {
-  //   // TODO: Adds song to the playlist.
-  // };
+  const removeSong = (id) => {
+    setPlaylist({ title: playlist.title, songs: playlist.songs.filter((s) => s[2] !== id) });
+  };
 
   const displayForm = () => (
     <Container fluid>
       <Row>
         <Col>
           <InputGroup>
-            <AutoSearch />
+            <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
           </InputGroup>
           <Button onClick={() => savePlaylistOnSpotify()}>Save playlist on Spotify</Button>
         </Col>
-        {/* {playlist.tracks.map((track, index) => { return (
-                   <Card key={track.id}>
-                       <Card.Body>
-                           <h3>
-                               {track.name}
-                           </h3>
-                           <h4>
-                               {track.artists.map((artist, index) => {
-                                   return (`${artist}`)
-                               })}
-                           </h4>
-                       </Card.Body>
-                       <Button>X</Button>
-                   </Card>
-               )
-               })} */}
         <Col>
           <h2>{playlist.title}</h2>
           {playlist.songs.map((song) => (
-            <Card key={song[0] + song[1]}>
+            <Card key={song[2]}>
               <Card.Body>
                 <Card.Title>{song[0]}</Card.Title>
-                <Card.Text>{song[1]}</Card.Text>
+                <Card.Text>{song[1].join(', ')}</Card.Text>
               </Card.Body>
-              <Button variant="danger">X</Button>
+              <Button variant="danger" onClick={() => removeSong(song[2])}>X</Button>
             </Card>
           ))}
           <Button onClick={() => savePlaylist()}>Save Playlist</Button>

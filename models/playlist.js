@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const playlistSchema = new mongoose.Schema({
+    _id: {
+        type: ObjectId,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -13,7 +17,10 @@ const playlistSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-            artist: {
+            artists: [{
+                artist: String
+            }],
+            id: {
                 type: String,
                 required: true
             }

@@ -1,7 +1,7 @@
 // Test data for playlist objects
 export default [
   {
-    name: 'Playlist1',
+    title: 'Playlist1',
     tracks: [
       {
         name: 'Song1',
@@ -18,14 +18,15 @@ export default [
         id: '113467',
       },
     ],
-    id: '876543',
+    _id: '876543',
+    author: 'Rob Boss',
   },
   {
-    name: 'Playlist2',
-    id: '976543',
+    title: 'Playlist2',
+    _id: '976543',
   },
   {
-    name: 'Playlist3',
-    id: '63',
+    title: 'Playlist3',
+    _id: '63',
   },
 ];

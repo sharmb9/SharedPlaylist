@@ -45,7 +45,7 @@ router.put("/:song", async (req, res) => {
 
 router.post("/:playlistName", async (req, res) => {
     try {
-        console.log(req.body);
+        // TODO: switch to findByIdAndUpdate()
         await Playlist.updateOne({ title: req.params.playlistName }, { $set: { songs: req.body.songs } })
         res.json({ message: 'Playlist Updated' })
     } catch (err) {

@@ -35,6 +35,7 @@ const stateKey = 'spotify_auth_state';
 
 const app = express();
 
+// noinspection JSCheckFunctionSignatures
 app.use(express.static(__dirname + '/public'))
    .use(cors())
    .use(cookieParser());
@@ -51,7 +52,7 @@ app.get('/login', function(req, res) {
       response_type: 'code',
       client_id: client_id,
       scope: scope,
-      redirect_uri: redirect_uri,
+      redirect_uri: req.protocol + '://' + req.get('host') + '/callback',
       state: state
     }));
 });
@@ -103,7 +104,7 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/#' +
+        res.redirect(`http://${req.get('host').split(':')[0]}:3000/#` +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token

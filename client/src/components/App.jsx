@@ -26,8 +26,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <a href="http://localhost:8888">
-        <button type="button">Connect To Spotify</button>
+      <a className="btn btn-dark" href={`http://${window.location.hostname}:8888/${window.location.hash}`}>
+        Connect to Spotify
       </a>
       <Router>
         <Route exact path="/">

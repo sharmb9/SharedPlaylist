@@ -11,7 +11,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-
 router.post('/', async (req, res) => {
     try {
         const playlist = new Playlist({
@@ -22,15 +21,6 @@ router.post('/', async (req, res) => {
         res.status(201).json(newPlaylist)
     } catch (err) {
         res.status(400).json({ message: err.message })
-    }
-})
-
-router.delete('/:song', async (req, res) => {
-    try {
-        const removedSong = await Playlist.deleteOne({ song: req.params.song })
-        res.json({ message: 'Song deleted' })
-    } catch (err) {
-        res.status(500).json({ message: err.message })
     }
 })
 
@@ -62,10 +52,19 @@ router.get("/:playlistName/:song", async (req, res) => {
     }
 })
 
+router.delete("/:playlistName/", async (req, res) => {
+    try {
+        const playlist = await Playlist.deleteOne({ title: req.params.playlistName})
+        res.json({message: "Playlist deleted", playlist});
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 router.get("/:playlistName", async (req, res) => {
     try {
-        const playlist = await Playlist.findOne({ title: req.params.playlistName })
-        res.json(playlist)
+        const playlist = await Playlist.findOne({ title: req.params.playlistName})
+        res.json(playlist);
     } catch (err) {
         res.status(500).json({ message: err.message })
     }

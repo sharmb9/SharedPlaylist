@@ -6,7 +6,6 @@ import { Card } from 'react-bootstrap';
  * @props playlist - a playlist object
  */
 
-// TODO: Update the playlist display.
 const Playlist = (props) => {
   const { playlist } = props;
   return (

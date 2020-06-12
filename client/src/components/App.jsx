@@ -43,7 +43,7 @@ const App = () => {
         console.error(error);
       }
     }());
-  }, []);
+  }, [playlists]);
 
   return (
     <div className="App">

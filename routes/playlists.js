@@ -52,9 +52,9 @@ router.get("/:playlistName/:song", async (req, res) => {
     }
 })
 
-router.delete("/:playlistName/", async (req, res) => {
+router.delete("/:id/", async (req, res) => {
     try {
-        const playlist = await Playlist.deleteOne({ title: req.params.playlistName})
+        const playlist = await Playlist.deleteOne({ _id: req.params.id})
         res.json({message: "Playlist deleted", playlist});
     } catch (err) {
         res.status(500).json({ message: err.message })

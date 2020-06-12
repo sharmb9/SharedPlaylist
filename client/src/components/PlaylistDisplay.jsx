@@ -14,9 +14,9 @@ import { getHashParams } from './AutoSearch';
 const PlaylistDisplay = (props) => {
   const { playlists } = props;
 
-  const deletePlaylist = async (title) => {
+  const deletePlaylistById = async (id) => {
     try {
-      await fetch(`/playlists/${title}/`, {
+      await fetch(`/playlists/${id}/`, {
         method: 'DELETE',
       });
     } catch (error) {
@@ -36,7 +36,7 @@ const PlaylistDisplay = (props) => {
                 </Link>
               </Col>
               <Col>
-                <Button variant="danger" onClick={() => deletePlaylist(playlist.title)}>X</Button>
+                <Button variant="danger" onClick={() => deletePlaylistById(playlist._id)}>X</Button>
               </Col>
             </Row>
           </Container>

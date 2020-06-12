@@ -49,6 +49,10 @@ const PlaylistForm = (props) => {
     const artists = songList.artists[id];
     const uuid = songList.ids[id];
     let { songs } = playlist;
+    if (songs.some((x) => x[2] === uuid)) {
+      alert('Calm down. Choose a different song.');
+      return;
+    }
     songs = [...songs, [currentSong, artists, uuid]];
     setPlaylist({
       // eslint-disable-next-line no-underscore-dangle

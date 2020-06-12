@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // noinspection ES6CheckImport
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Modal, Button, FormControl } from 'react-bootstrap';
 import Search from './Search';
 import PlaylistDisplay from './PlaylistDisplay';
 import PlaylistForm from './PlaylistForm';
@@ -11,13 +12,16 @@ import PlaylistForm from './PlaylistForm';
 
 const App = () => {
   const [playlists, setPlaylists] = useState([]);
+  const [shownlists, showLists] = useState(playlists);
+  const [modal, toggle] = useState(false);
 
   // When mounting, pull the /playlists objects from the server.
   useEffect(() => {
     (async function () {
       try {
         const response = await fetch('/playlists/');
-        setPlaylists(await response.json());
+        const goods = await response.json();
+        setPlaylists(goods); showLists(goods);
       } catch (error) {
         console.error(error);
       }
@@ -31,14 +35,21 @@ const App = () => {
       </a>
       <Router>
         <Route exact path="/">
-          <Search placeholder="Search a playlist..." />
-          <PlaylistDisplay playlists={playlists} />
+          <Button variant="secondary" onClick={() => toggle(true)}>+</Button>
+          <Search show={showLists} lists={playlists} placeholder="Search a playlist..." />
+          <Modal centered show={modal} onHide={() => toggle(false)}>
+            <Modal.Header closeButton><Modal.Title>New Playlist</Modal.Title></Modal.Header>
+            <Modal.Body><FormControl placeholder="Title" /></Modal.Body>
+            <Modal.Footer><Button onClick={() => alert('maybe tomorrow')}>Create</Button></Modal.Footer>
+          </Modal>
+          <PlaylistDisplay playlists={shownlists} />
         </Route>
         <Route
           path="/playlist/:playlistName"
-          render={({ match }) => (
-            <PlaylistForm playlistName={match.params.playlistName} />
-          )}
+          render={({ match }) => {
+            showLists(playlists);
+            return <PlaylistForm playlistName={match.params.playlistName} />;
+          }}
         />
       </Router>
     </div>

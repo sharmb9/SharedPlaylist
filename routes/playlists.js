@@ -54,7 +54,7 @@ router.get("/:playlistName/:song", async (req, res) => {
 
 router.delete("/:playlistName/", async (req, res) => {
     try {
-        const playlist = await Playlist.deleteOne({ title: req.params.playlistName})
+        const playlist = await Playlist.deleteOne({ title: req.params.playlistName })
         res.json({message: "Playlist deleted", playlist});
     } catch (err) {
         res.status(500).json({ message: err.message })
@@ -63,7 +63,7 @@ router.delete("/:playlistName/", async (req, res) => {
 
 router.get("/:playlistName", async (req, res) => {
     try {
-        const playlist = await Playlist.findOne({ title: req.params.playlistName})
+        const playlist = await Playlist.findOne({ title: req.params.playlistName })
         res.json(playlist);
     } catch (err) {
         res.status(500).json({ message: err.message })

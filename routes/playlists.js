@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const playlist = new Playlist({
-            song: req.body.song,
-            artist: req.body.artist
+            title: req.body.title,
+            author: req.body.author
         })
         const newPlaylist = await playlist.save()
         res.status(201).json(newPlaylist)

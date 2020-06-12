@@ -12,6 +12,7 @@ const Search = (props) => {
       onChange={(e) => show(lists.filter(
         (p) => p.title && p.title.includes(e.target.value),
       ))}
+      onClick={(e) => { if (!e.target.value) show(lists); }}
       name={name}
       value={value}
     />

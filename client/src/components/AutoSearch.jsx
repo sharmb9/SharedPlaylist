@@ -4,18 +4,6 @@ import {getHashParams} from "./util/spotify";
 import SpotifyWebApi from "spotify-web-api-js";
 import { FormControl } from "react-bootstrap";
 
-/**
- * Obtains parameters from the hash of the URL
- * @return Object
- */
-// export const getHashParams = () => {
-//   const hashParams = {};
-//   const r = /([^&;=]+)=?([^&;]*)/g;
-//   const q = window.location.hash.substring(1);
-//   const e = r.exec(q);
-//   if (e) hashParams[e[1]] = decodeURIComponent(e[2]);
-//   return hashParams;
-// };
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -25,6 +13,7 @@ const AutoSearch = (props) => {
     suggestedSongs: [],
     artists: [],
     ids: [],
+    uris:[]
   });
 
   const [searchQueryState, setSearchQueryState] = useState({ searchQuery: "" });
@@ -51,8 +40,9 @@ const AutoSearch = (props) => {
           const artists = artistsArray.map((artist) =>
             artist.map((artis) => artis.name)
           );
+          const uris =res.tracks.items.map((item) => item.uri)
 
-          setSongsState({ suggestedSongs: songs, artists, ids });
+          setSongsState({ suggestedSongs: songs, artists, ids, uris });
         }
       } catch (error) {
         console.log(error.message);
@@ -60,6 +50,7 @@ const AutoSearch = (props) => {
           suggestedSongs: undefined,
           artists: undefined,
           ids: undefined,
+          uris:undefined
         });
       }
     })();

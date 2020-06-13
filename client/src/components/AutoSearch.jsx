@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 // import { Button } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-js';
@@ -54,7 +55,7 @@ const AutoSearch = (props) => {
         });
       }
     }());
-  }, [searchQuery, searchQueryState]);
+  }, [searchQuery]);
 
   const AutoSearchList = () => (
     <ul className="list-group">

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import {
   InputGroup, Row, Col, Container, Button, Card,
@@ -23,7 +24,7 @@ const PlaylistForm = (props) => {
         console.error(error);
       }
     }());
-  }, [playlistName]);
+  }, []);
 
   const savePlaylist = () => {
     (async function () {
@@ -73,13 +74,14 @@ const PlaylistForm = (props) => {
     const uri = songList.uris[id];
     let { songs } = playlist;
     if (songs.some((x) => x[2] === uuid)) {
+      // eslint-disable-next-line no-alert
       alert('Calm down. Choose a different song.');
       return;
     }
     songs = [...songs, [currentSong, artists, uuid, uri]];
     setPlaylist({
-      // eslint-disable-next-line no-underscore-dangle
       title: playlist.title,
+      // eslint-disable-next-line no-underscore-dangle
       _id: playlist._id,
       author: playlist.author,
       songs,

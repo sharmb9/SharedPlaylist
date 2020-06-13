@@ -25,14 +25,14 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put("/:song", async (req, res) => {
-    try {
-        const updatedSong = await Playlist.updateOne({ song: req.params.song }, { $set: { song: req.body.song } })
-        res.json({ message: 'Song Updated' })
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-})
+// router.put("/:song", async (req, res) => {
+//     try {
+//         const updatedSong = await Playlist.updateOne({ song: req.params.song }, { $set: { song: req.body.song } })
+//         res.json({ message: 'Song Updated' })
+//     } catch (err) {
+//         res.status(500).json({ message: err.message })
+//     }
+// })
 
 router.post("/:playlistName", async (req, res) => {
     try {
@@ -55,6 +55,7 @@ router.get("/:playlistName/:song", async (req, res) => {
 
 router.delete("/:id/", async (req, res) => {
     try {
+        // TODO: Verify user is the creator of playlist up for deletion
         const playlist = await Playlist.deleteOne({ _id: req.params.id })
         res.json({message: "Playlist deleted", playlist});
     } catch (err) {

@@ -85,6 +85,7 @@ router.get('/callback', function(req, res) {
         // then set display_name cookie and redirect.
         request.get(options, function(error, response, body) {
           if (!error && response.statusCode === 200) {
+            // noinspection JSUnresolvedVariable
             res.cookie('display_name', body.display_name);
             // we can also pass the token to the browser to make requests from there
             res.redirect(`http://${req.get('host').split(':')[0]}:3000/#` +

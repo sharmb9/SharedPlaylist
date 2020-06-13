@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { InputGroup, Row, Col, Container, Button, Card } from "react-bootstrap";
-import AutoSearch from "./AutoSearch";
-import { getUserId, getHashParams } from "./util/spotify";
-import SpotifyWebApi from "spotify-web-api-js";
+import React, { useState, useEffect } from 'react';
+import {
+  InputGroup, Row, Col, Container, Button, Card,
+} from 'react-bootstrap';
+import SpotifyWebApi from 'spotify-web-api-js';
+import AutoSearch from './AutoSearch';
+import { getUserId, getHashParams } from './util/spotify';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -20,7 +22,7 @@ const PlaylistForm = (props) => {
       } catch (error) {
         console.error(error);
       }
-    })();
+    }());
   }, [playlistName]);
 
   const savePlaylist = () => {
@@ -29,36 +31,36 @@ const PlaylistForm = (props) => {
         const response = await fetch(
           `http://${window.location.host}/playlists/${playlist.title}`,
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             // eslint-disable-next-line no-underscore-dangle
             body: JSON.stringify({ songs: playlist.songs }),
-          }
+          },
         );
         console.log(await response.json());
       } catch (error) {
         console.error(error);
       }
-    })();
+    }());
   };
 
   // Saves the playlist to a user's spotify account if they're logged in.
   const savePlaylistOnSpotify = async () => {
-    let userId = await getUserId();
+    const userId = await getUserId();
     const params = getHashParams();
-    let access_token = params.access_token;
-    const uriArray = playlist.songs.map(((song) => song[3]))
+    const { access_token } = params;
+    const uriArray = playlist.songs.map(((song) => song[3]));
     if (access_token) {
       spotifyApi.setAccessToken(access_token);
     }
     try {
       // create playlist and gets playlist id needed for addings songs to playlist
-      const res = await spotifyApi.createPlaylist(userId, {name:playlistName});
-      const playlistId= res.id;
-      const snapshotid = await spotifyApi.addTracksToPlaylist(playlistId,uriArray);
-      console.log(snapshotid)
+      const res = await spotifyApi.createPlaylist(userId, { name: playlistName });
+      const playlistId = res.id;
+      const snapshotid = await spotifyApi.addTracksToPlaylist(playlistId, uriArray);
+      console.log(snapshotid);
     } catch (error) {
       console.log(error.response);
     }
@@ -68,10 +70,10 @@ const PlaylistForm = (props) => {
     const currentSong = songList.suggestedSongs[id];
     const artists = songList.artists[id];
     const uuid = songList.ids[id];
-    const uri = songList.uris[id]
+    const uri = songList.uris[id];
     let { songs } = playlist;
     if (songs.some((x) => x[2] === uuid)) {
-      alert("Calm down. Choose a different song.");
+      alert('Calm down. Choose a different song.');
       return;
     }
     songs = [...songs, [currentSong, artists, uuid, uri]];
@@ -112,7 +114,7 @@ const PlaylistForm = (props) => {
               <Card key={song[2]}>
                 <Card.Body>
                   <Card.Title>{song[0]}</Card.Title>
-                  <Card.Text>{song[1].join(", ")}</Card.Text>
+                  <Card.Text>{song[1].join(', ')}</Card.Text>
                 </Card.Body>
                 <Button variant="danger" onClick={() => removeSong(song[2])}>
                   X

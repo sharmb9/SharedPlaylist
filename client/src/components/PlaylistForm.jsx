@@ -44,12 +44,12 @@ const PlaylistForm = (props) => {
     })();
   };
 
-  // Adds songs to playlist
+  // Saves the playlist to a user's spotify account if they're logged in.
   const savePlaylistOnSpotify = async () => {
-    // Saves the playlist to a user's spotify account if they're logged in.
     let userId = await getUserId();
     const params = getHashParams();
     let access_token = params.access_token;
+    const uriArray = playlist.songs.map(((song) => song[3]))
     if (access_token) {
       spotifyApi.setAccessToken(access_token);
     }
@@ -57,12 +57,11 @@ const PlaylistForm = (props) => {
       // create playlist and gets playlist id needed for addings songs to playlist
       const res = await spotifyApi.createPlaylist(userId, {name:playlistName});
       const playlistId= res.id;
-      console.log(playlist.songs)
+      const snapshotid = await spotifyApi.addTracksToPlaylist(playlistId,uriArray);
+      console.log(snapshotid)
     } catch (error) {
       console.log(error.response);
     }
-
-    console.log(playlistName);
   };
 
   const addSong = (songList, id) => {

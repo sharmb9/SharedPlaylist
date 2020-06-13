@@ -1,8 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Playlist from "./Playlist";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Button, Container, Row, Col,
+} from 'react-bootstrap';
+import Playlist from './Playlist';
 import {getHashParams} from "./util/spotify";
-
 
 /**
  * The playlist display is the container for all of the playlist cards.
@@ -13,11 +15,25 @@ const PlaylistDisplay = (props) => {
   const { playlists } = props;
   const params = getHashParams();
   let access_token = params.access_token;
+
+  const deletePlaylistById = async (id) => {
+    try {
+      await fetch(`/playlists/${id}/`, {
+        method: 'DELETE',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
-      {playlists !== [] ? (
-        playlists.map((playlist, index) => (
-          <Link
+      {playlists !== []
+        ? playlists.map((playlist, index) => (
+          <Container fluid>
+            <Row>
+              <Col xs={11}>
+              <Link
             key={index.toString()}
             to={`/playlist/${playlist.title}#access_token=${
               access_token
@@ -25,7 +41,13 @@ const PlaylistDisplay = (props) => {
           >
             <Playlist playlist={playlist} />
           </Link>
-        ))
+              </Col>
+              <Col>
+                <Button variant="danger" onClick={() => deletePlaylistById(playlist._id)}>X</Button>
+              </Col>
+            </Row>
+          </Container>
+        )
       ) : (
         <h1>No playlists yet...</h1>
       )}

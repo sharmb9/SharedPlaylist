@@ -15,8 +15,8 @@ async function createList(title) {
       },
       body: JSON.stringify({ title: title.current.value, author: 'Hard Coded' }),
     });
-    console.log(await response.json());
-    window.location.href = `/playlist/${title.current.value}`;
+    console.log(await response.json().message);
+    window.location.href = `/playlist/${title.current.value}${window.location.hash}`;
   } catch (error) {
     console.error(error);
   }
@@ -47,7 +47,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <a className="btn btn-dark" href={`http://${window.location.hostname}:8888/${window.location.hash}`}>
+      <a className="btn btn-dark" href={`http://${window.location.hostname}:8080/connect/${window.location.hash}`}>
         Connect to Spotify
       </a>
       <Router>

@@ -14,9 +14,10 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        const { display_name } = req.cookies;
         const playlist = new Playlist({
             title: req.body.title,
-            author: req.body.author
+            author: display_name ? display_name : 'Anonymous Arcturian'
         })
         const newPlaylist = await playlist.save()
         res.status(201).json(newPlaylist)

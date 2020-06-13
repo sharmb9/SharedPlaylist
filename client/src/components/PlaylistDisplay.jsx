@@ -4,7 +4,7 @@ import {
   Button, Container, Row, Col,
 } from 'react-bootstrap';
 import Playlist from './Playlist';
-import {getHashParams} from "./util/spotify";
+import { getHashParams } from './util/spotify';
 
 /**
  * The playlist display is the container for all of the playlist cards.
@@ -14,7 +14,7 @@ import {getHashParams} from "./util/spotify";
 const PlaylistDisplay = (props) => {
   const { playlists } = props;
   const params = getHashParams();
-  let access_token = params.access_token;
+  const { access_token } = params;
 
   const deletePlaylistById = async (id) => {
     try {
@@ -33,24 +33,23 @@ const PlaylistDisplay = (props) => {
           <Container fluid>
             <Row>
               <Col xs={11}>
-              <Link
-            key={index.toString()}
-            to={`/playlist/${playlist.title}#access_token=${
-              access_token
-            }`}
-          >
-            <Playlist playlist={playlist} />
-          </Link>
+                <Link
+                  key={index.toString()}
+                  to={`/playlist/${playlist.title}#access_token=${
+                    access_token
+                  }`}
+                >
+                  <Playlist playlist={playlist} />
+                </Link>
               </Col>
               <Col>
                 <Button variant="danger" onClick={() => deletePlaylistById(playlist._id)}>X</Button>
               </Col>
             </Row>
           </Container>
-        )
-      ) : (
-        <h1>No playlists yet...</h1>
-      )}
+        )) : (
+          <h1>No playlists yet...</h1>
+        )}
     </div>
   );
 };

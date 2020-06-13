@@ -1,30 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 // import { Button } from 'react-bootstrap';
-import SpotifyWebApi from 'spotify-web-api-js';
-import { FormControl } from 'react-bootstrap';
+import {getHashParams} from "./util/spotify";
+import SpotifyWebApi from "spotify-web-api-js";
+import { FormControl } from "react-bootstrap";
 
-/**
-   * Obtains parameters from the hash of the URL
-   * @return Object
-   */
-export const getHashParams = () => {
-  const hashParams = {};
-  const r = /([^&;=]+)=?([^&;]*)/g;
-  const q = window.location.hash.substring(1);
-  const e = r.exec(q);
-  if (e) hashParams[e[1]] = decodeURIComponent(e[2]);
-  return hashParams;
-};
 
 const spotifyApi = new SpotifyWebApi();
 
 const AutoSearch = (props) => {
   const { onAdd } = props;
   const [songsState, setSongsState] = useState({
-    suggestedSongs: [], artists: [], ids: [],
+    suggestedSongs: [],
+    artists: [],
+    ids: [],
+    uris:[]
   });
 
-  const [searchQueryState, setSearchQueryState] = useState({ searchQuery: '' });
+  const [searchQueryState, setSearchQueryState] = useState({ searchQuery: "" });
   const { searchQuery } = searchQueryState;
 
   // Updates searchQueryState state on target value change
@@ -34,24 +26,34 @@ const AutoSearch = (props) => {
 
   useEffect(() => {
     (async function () {
-      if (getHashParams().access_token) {
-        spotifyApi.setAccessToken(getHashParams().access_token);
+      const params = getHashParams();
+      let access_token = params.access_token;
+      if (access_token) {
+        spotifyApi.setAccessToken(access_token);
       }
       try {
         if (searchQuery) {
-          const res = await spotifyApi.search(searchQuery, ['track']);
+          const res = await spotifyApi.search(searchQuery, ["track"]);
           const songs = res.tracks.items.map((item) => item.name);
           const ids = res.tracks.items.map((item) => item.id);
           const artistsArray = res.tracks.items.map((item) => item.artists);
-          const artists = artistsArray.map((artist) => artist.map((artis) => artis.name));
+          const artists = artistsArray.map((artist) =>
+            artist.map((artis) => artis.name)
+          );
+          const uris =res.tracks.items.map((item) => item.uri)
 
-          setSongsState({ suggestedSongs: songs, artists, ids });
+          setSongsState({ suggestedSongs: songs, artists, ids, uris });
         }
       } catch (error) {
         console.log(error.message);
-        setSongsState({ suggestedSongs: undefined, artists: undefined, ids: undefined });
+        setSongsState({
+          suggestedSongs: undefined,
+          artists: undefined,
+          ids: undefined,
+          uris:undefined
+        });
       }
-    }());
+    })();
   }, [searchQuery, searchQueryState]);
 
   const AutoSearchList = () => (
@@ -59,14 +61,21 @@ const AutoSearch = (props) => {
       {songsState.suggestedSongs.map((song, index) => (
         <li className="list-group-item" key={songsState.ids[index]}>
           {song}
-          {' – '}
-          <span style={{ color: 'darkslategray' }}>{songsState.artists[index].join(' × ')}</span>
-          <button type="submit" style={{ float: 'right', marginLeft: 17 }} onClick={() => onAdd(songsState, index)}>Add song</button>
+          {" – "}
+          <span style={{ color: "darkslategray" }}>
+            {songsState.artists[index].join(" × ")}
+          </span>
+          <button
+            type="submit"
+            style={{ float: "right", marginLeft: 17 }}
+            onClick={() => onAdd(songsState, index)}
+          >
+            Add song
+          </button>
         </li>
       ))}
     </ul>
   );
-
 
   return (
     <div className="search-box">
@@ -77,11 +86,7 @@ const AutoSearch = (props) => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {songsState.suggestedSongs ? (
-        <AutoSearchList />
-      ) : (
-        <div>No results</div>
-      )}
+      {songsState.suggestedSongs ? <AutoSearchList /> : <div>No results</div>}
     </div>
   );
 };

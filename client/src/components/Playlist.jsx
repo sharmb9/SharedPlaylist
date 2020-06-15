@@ -3,10 +3,12 @@ import { Button, Card } from 'react-bootstrap';
 
 const deletePlaylistById = async (id) => {
   try {
-    await fetch(`/playlists/${id}/`, {
+    const res = await fetch(`/playlists/${id}/`, {
       method: 'DELETE',
     });
+    const ponse = await res.json();
     window.location.href = `http://${window.location.host}${window.location.hash}`;
+    alert(ponse.message);
   } catch (error) {
     console.error(error);
   }

@@ -97,7 +97,7 @@
           alert('There was an error during the authentication');
         } else {
           if (access_token) {
-            console.log(access_token);
+            // console.log(access_token);
             // render oauth info
             oauthPlaceholder.innerHTML = oauthTemplate({
               access_token: access_token,
@@ -114,6 +114,10 @@
 
                   $('#login').hide();
                   $('#loggedin').show();
+                },
+                error: function(response) {
+                  $('#login').show();
+                  $('#loggedin').hide();
                 }
             });
           } else {

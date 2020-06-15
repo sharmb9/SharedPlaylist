@@ -55,8 +55,12 @@ router.get("/:playlistName/:song", async (req, res) => {
 
 router.delete("/:id/", async (req, res) => {
     try {
-        // TODO: Verify user is the creator of playlist up for deletion
-        const playlist = await Playlist.deleteOne({ _id: req.params.id })
+        let playlist = await Playlist.findOne({ _id: req.params.id })
+        // noinspection JSUnresolvedVariable
+        if(req.cookies.display_name !== playlist.author && playlist.author !== 'Anonymous Arcturian') {
+            return res.status(401).json({message: 'Only the listed author can delete this playlist.'})
+        }
+        playlist = await Playlist.deleteOne({ _id: req.params.id })
         res.json({message: "Playlist deleted", playlist});
     } catch (err) {
         res.status(500).json({ message: err.message })

@@ -12,6 +12,10 @@ const playlistSchema = new mongoose.Schema({
     author: {
         type: String,
         required: false
+    },
+    spotifyid:{
+        type:String,
+        required:false
     }
 })
 

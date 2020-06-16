@@ -1,11 +1,9 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
-import {
-  InputGroup, Row, Col, Container, Button, Card,
-} from 'react-bootstrap';
-import SpotifyWebApi from 'spotify-web-api-js';
-import AutoSearch from './AutoSearch';
-import { getUserId, getHashParams } from './util/spotify';
+import React, { useState, useEffect } from "react";
+import { InputGroup, Row, Col, Container, Button, Card } from "react-bootstrap";
+import SpotifyWebApi from "spotify-web-api-js";
+import AutoSearch from "./AutoSearch";
+import { getUserId, getHashParams } from "./util/spotify";
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -23,7 +21,7 @@ const PlaylistForm = (props) => {
       } catch (error) {
         console.error(error);
       }
-    }());
+    })();
   }, []);
 
   const savePlaylist = () => {
@@ -32,19 +30,19 @@ const PlaylistForm = (props) => {
         const response = await fetch(
           `http://${window.location.host}/playlists/${playlist.title}`,
           {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             // eslint-disable-next-line no-underscore-dangle
             body: JSON.stringify({ songs: playlist.songs }),
-          },
+          }
         );
         console.log(await response.json());
       } catch (error) {
         console.error(error);
       }
-    }());
+    })();
   };
 
   // Saves the playlist to a user's spotify account if they're logged in.
@@ -52,18 +50,33 @@ const PlaylistForm = (props) => {
     const userId = await getUserId();
     const params = getHashParams();
     const { access_token } = params;
-    const uriArray = playlist.songs.map(((song) => song[3]));
+    let playlistId;
+    const uriArray = playlist.songs.map((song) => song[3]);
     if (access_token) {
       spotifyApi.setAccessToken(access_token);
     }
     try {
-      // create playlist and gets playlist id needed for addings songs to playlist
-      const res = await spotifyApi.createPlaylist(userId, { name: playlistName });
-      const playlistId = res.id;
-      const snapshotid = await spotifyApi.addTracksToPlaylist(playlistId, uriArray);
-      console.log(snapshotid);
+      const spotifyRes = await spotifyApi.getUserPlaylists(userId);
+      const playlistNames = spotifyRes.items.map((item) => item.name);
+      const existingPlaylistName = playlistNames.find(
+        (spotifyplaylistTitle) => spotifyplaylistTitle === playlistName
+      );
+      // If playlist name doesnt exist in spotify account, create playlist and get id otherwise use current playlist id
+      if (!existingPlaylistName) {
+        const res = await spotifyApi.createPlaylist(userId, {
+          name: playlistName,
+        });
+        playlistId = res.id;
+        await spotifyApi.addTracksToPlaylist(playlistId, uriArray);
+        console.log("Created new playlist");
+      } else {
+        const playlistIds = spotifyRes.items.map((item) => item.id);
+        playlistId = playlistIds[0];
+        await spotifyApi.replaceTracksInPlaylist(playlistId, uriArray);
+        console.log("New tracks added");
+      }
     } catch (error) {
-      console.log(error.response);
+      console.log(error.message);
     }
   };
 
@@ -75,7 +88,7 @@ const PlaylistForm = (props) => {
     let { songs } = playlist;
     if (songs.some((x) => x[2] === uuid)) {
       // eslint-disable-next-line no-alert
-      alert('Calm down. Choose a different song.');
+      alert("Calm down. Choose a different song.");
       return;
     }
     songs = [...songs, [currentSong, artists, uuid, uri]];
@@ -116,7 +129,7 @@ const PlaylistForm = (props) => {
               <Card key={song[2]}>
                 <Card.Body>
                   <Card.Title>{song[0]}</Card.Title>
-                  <Card.Text>{song[1].join(', ')}</Card.Text>
+                  <Card.Text>{song[1].join(", ")}</Card.Text>
                 </Card.Body>
                 <Button variant="danger" onClick={() => removeSong(song[2])}>
                   X

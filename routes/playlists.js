@@ -44,17 +44,6 @@ router.post("/:playlistName", async (req, res) => {
     }
 })
 
-router.put("/:playlistName/:spotifyplaylist_id", async (req, res) => {
-    try {
-        // TODO: switch to findByIdAndUpdate()
-        const playlist = await Playlist.updateOne({ title: req.params.playlistName })
-        playlist.spotifyid = req.params.spotifyplaylist_id;
-        res.json({ message: 'Spotify playlist id added' })
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-})
-
 router.get("/:playlistName/:song", async (req, res) => {
     try {
         const song = await Playlist.findOne({ song: req.params.song })

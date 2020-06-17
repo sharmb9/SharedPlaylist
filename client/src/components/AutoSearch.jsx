@@ -87,7 +87,7 @@ const AutoSearch = (props) => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {songsState.suggestedSongs ? <AutoSearchList /> : <div>No results</div>}
+      {songsState.suggestedSongs && searchQuery ? <AutoSearchList /> : <div></div>}
     </div>
   );
 };

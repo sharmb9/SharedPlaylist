@@ -34,7 +34,7 @@ const AutoSearch = (props) => {
       }
       try {
         if (searchQuery) {
-          const res = await spotifyApi.search(searchQuery, ['track']);
+          const res = await spotifyApi.search(searchQuery, ['track'], {limit:10});
           const songs = res.tracks.items.map((item) => item.name);
           const ids = res.tracks.items.map((item) => item.id);
           const artistsArray = res.tracks.items.map((item) => item.artists);
@@ -87,7 +87,7 @@ const AutoSearch = (props) => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {songsState.suggestedSongs ? <AutoSearchList /> : <div>No results</div>}
+      {songsState.suggestedSongs && searchQuery ? <AutoSearchList /> : <div></div>}
     </div>
   );
 };

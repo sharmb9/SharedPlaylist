@@ -112,40 +112,40 @@ const PlaylistForm = (props) => {
   };
 
   const displayForm = () => (
-    <Container fluid>
-      <Row>
-        <Col>
-          <InputGroup>
-            <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
-          </InputGroup>
-          <Button onClick={savePlaylistOnSpotify}>
-            Save playlist on Spotify
-          </Button>
-        </Col>
-        {playlist.songs.length ? (
-          <Col>
-            <h2>{playlist.title}</h2>
-            {playlist.songs.map((song) => (
-              <Card key={song[2]}>
-                <Card.Body>
-                  <Card.Title>{song[0]}</Card.Title>
-                  <Card.Text>{song[1].join(", ")}</Card.Text>
-                </Card.Body>
-                <Button variant="danger" onClick={() => removeSong(song[2])}>
-                  X
-                </Button>
-              </Card>
-            ))}
-            <Button onClick={() => savePlaylist()}>Save Playlist</Button>
-          </Col>
-        ) : (
-          <Col>
-            <h1>{playlist.title}</h1>
-            <h5>Add songs to this playlist.</h5>
-          </Col>
-        )}
-      </Row>
-    </Container>
+    <div className="playlist-page">
+      <div className="search">
+        <InputGroup className="input-group">
+          <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
+          <InputGroup.Append className="btn">
+            <Button onClick={savePlaylistOnSpotify}>
+              Save playlist on Spotify
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </div>
+      {playlist.songs.length ? (
+        <div className="playlist-display">
+          <h2>{playlist.title}</h2>
+          {playlist.songs.map((song) => (
+            <Card key={song[2]}>
+              <Card.Body>
+                <Card.Title>{song[0]}</Card.Title>
+                <Card.Text>{song[1].join(", ")}</Card.Text>
+              </Card.Body>
+              <Button variant="danger" onClick={() => removeSong(song[2])}>
+                X
+              </Button>
+            </Card>
+          ))}
+          <Button onClick={() => savePlaylist()}>Save Playlist</Button>
+        </div>
+      ) : (
+        <div className="no-playlist">
+          <h1>{playlist.title}</h1>
+          <h5>Add songs to this playlist.</h5>
+        </div>
+      )}
+    </div>
   );
 
   return (

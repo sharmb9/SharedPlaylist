@@ -12,6 +12,28 @@ code {
     monospace;
 }
 
+/* PlaylistForm + AUtosearch styling */
+
+.playlist-page{
+
+}
+
+.input-group{
+  display: flex;
+  justify-content: center;
+}
+.search-box{
+ width:50%;
+ position: relative;
+}
+
+.list-group{
+  position: absolute;
+}
+.btn{
+
+}
+
 .search-box ul {
   width: 100%;
 }

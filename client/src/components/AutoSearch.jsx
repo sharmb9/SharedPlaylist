@@ -34,7 +34,7 @@ const AutoSearch = (props) => {
       }
       try {
         if (searchQuery) {
-          const res = await spotifyApi.search(searchQuery, ['track'], {limit:10});
+          const res = await spotifyApi.search(searchQuery, ['track'], {limit:7});
           const songs = res.tracks.items.map((item) => item.name);
           const ids = res.tracks.items.map((item) => item.id);
           const artistsArray = res.tracks.items.map((item) => item.artists);
@@ -62,7 +62,7 @@ const AutoSearch = (props) => {
       {songsState.suggestedSongs.map((song, index) => (
         <li className="list-group-item" id="list-group-item-override" key={songsState.ids[index]}>
           <div className="song-item">
-          {`${song}-${songsState.artists[index].join(' × ')}`}
+          {`${song}-${songsState.artists[index].join(',')}`}
           </div>
           <button
             type="submit"

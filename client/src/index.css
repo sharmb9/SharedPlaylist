@@ -15,45 +15,58 @@ code {
 /* PlaylistForm + AUtosearch styling */
 
 .playlist-component {
-  max-width: 1000px;
+  max-width: 1200px;
   padding: 0 1.5rem;
   margin-left: auto;
   margin-right: auto;
 }
 
- .input-group {
+.input-group {
   display: flex;
   justify-content: center;
 }
 
 .search-box {
-  width: 50%;
-  position:relative;
+  width: 70%;
+  position: relative;
   display: inline-block;
-
+  margin-bottom: 20px;
 }
 
 .autosearch-list-group {
-  position:absolute;
-  padding: 0;;
+  position: absolute;
+  padding: 0;
   top: 100%;
   left: 0;
   right: 0;
 }
 
-.list-group-item{
+.list-group-item {
   justify-content: space-between;
 }
 
-#list-group-item-override{
+#list-group-item-override {
   display: flex;
 }
 
-.song-item{
-  flex:1;
+.song-item {
+  flex: 1;
   white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.playlist-display{
+  display:flex;
+  flex-wrap: wrap;
+}
 
+.playlist-options{
+  flex:1;
+  margin-top:56px;
+}
+
+.playlist-tracks{
+  flex:2;
+  margin-right: 20px;
+}

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
-import { InputGroup, Row, Col, Container, Button, Card } from "react-bootstrap";
+import { InputGroup, Button, Card } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-js";
 import AutoSearch from "./AutoSearch";
 import { getUserId, getHashParams } from "./util/spotify";
@@ -113,31 +113,41 @@ const PlaylistForm = (props) => {
 
   const displayForm = () => (
     <div className="playlist-component">
-      <div className="search">
-        <InputGroup bsClass="input-group">
-          <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
-          <InputGroup.Append>
-            <Button bsClass="btn" onClick={savePlaylistOnSpotify}>
-              Save playlist on Spotify
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </div>
       {playlist.songs.length ? (
         <div className="playlist-display">
-          <h2>{playlist.title}</h2>
-          {playlist.songs.map((song) => (
-            <Card style={{position:"static"}} key={song[2]}>
+          <div className="playlist-tracks">
+            <div className="search">
+              <InputGroup bsClass="input-group">
+                <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
+              </InputGroup>
+            </div>
+            {playlist.songs.map((song) => (
+              <Card style={{ position: "static" }} key={song[2]}>
+                <Card.Body style={{ display: "flex" }}>
+                  <div className="song-item">
+                    <Card.Title>{song[0]}</Card.Title>
+                    <Card.Text>{song[1].join(", ")}</Card.Text>
+                  </div>
+                  <Button style={{height:"fit-content"}} variant="danger" onClick={() => removeSong(song[2])}>
+                    X
+                  </Button>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
+          <div className="playlist-options">
+            <Card style={{ position: "sticky", top: "1px" }}>
               <Card.Body>
-                <Card.Title>{song[0]}</Card.Title>
-                <Card.Text>{song[1].join(", ")}</Card.Text>
+                <Card.Title>
+                  <h2>{playlist.title}</h2>
+                </Card.Title>
+                <Button onClick={() => savePlaylist()}>Save Playlist</Button>
+                <Button bsClass="btn" onClick={savePlaylistOnSpotify}>
+                  Save playlist on Spotify
+                </Button>
               </Card.Body>
-              <Button variant="danger" onClick={() => removeSong(song[2])}>
-                X
-              </Button>
             </Card>
-          ))}
-          <Button onClick={() => savePlaylist()}>Save Playlist</Button>
+          </div>
         </div>
       ) : (
         <div className="no-playlist">

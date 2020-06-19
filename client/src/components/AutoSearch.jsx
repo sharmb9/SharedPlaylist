@@ -58,17 +58,15 @@ const AutoSearch = (props) => {
   }, [searchQuery]);
 
   const AutoSearchList = () => (
-    <ul className="list-group">
+    <ul className="autosearch-list-group">
       {songsState.suggestedSongs.map((song, index) => (
-        <li className="list-group-item" key={songsState.ids[index]}>
-          {song}
-          {' – '}
-          <span style={{ color: 'darkslategray' }}>
-            {songsState.artists[index].join(' × ')}
-          </span>
+        <li className="list-group-item" id="bootstrap-override" key={songsState.ids[index]}>
+          <div className="song-item">
+          {`${song}-${songsState.artists[index].join(' × ')}`}
+          </div>
           <button
             type="submit"
-            style={{ float: 'right', marginLeft: 17 }}
+            className="addsong-button"
             onClick={() => onAdd(songsState, index)}
           >
             Add song

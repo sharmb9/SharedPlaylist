@@ -60,7 +60,7 @@ const AutoSearch = (props) => {
   const AutoSearchList = () => (
     <ul className="autosearch-list-group">
       {songsState.suggestedSongs.map((song, index) => (
-        <li className="list-group-item" id="bootstrap-override" key={songsState.ids[index]}>
+        <li className="list-group-item" id="list-group-item-override" key={songsState.ids[index]}>
           <div className="song-item">
           {`${song}-${songsState.artists[index].join(' × ')}`}
           </div>

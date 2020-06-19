@@ -112,12 +112,12 @@ const PlaylistForm = (props) => {
   };
 
   const displayForm = () => (
-    <div className="playlist-page">
+    <div className="playlist-component">
       <div className="search">
-        <InputGroup className="input-group">
+        <InputGroup bsClass="input-group">
           <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
-          <InputGroup.Append className="btn">
-            <Button onClick={savePlaylistOnSpotify}>
+          <InputGroup.Append>
+            <Button bsClass="btn" onClick={savePlaylistOnSpotify}>
               Save playlist on Spotify
             </Button>
           </InputGroup.Append>
@@ -127,7 +127,7 @@ const PlaylistForm = (props) => {
         <div className="playlist-display">
           <h2>{playlist.title}</h2>
           {playlist.songs.map((song) => (
-            <Card key={song[2]}>
+            <Card style={{position:"static"}} key={song[2]}>
               <Card.Body>
                 <Card.Title>{song[0]}</Card.Title>
                 <Card.Text>{song[1].join(", ")}</Card.Text>

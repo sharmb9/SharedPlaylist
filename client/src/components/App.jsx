@@ -47,12 +47,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <a className="btn btn-dark" href={`http://${window.location.hostname}:8080/connect/${window.location.hash}`}>
+      <Button className="btn" id="connect-btn" href={`http://${window.location.hostname}:8080/connect/${window.location.hash}`}>
         Connect to Spotify
-      </a>
+      </Button>
       <Router>
         <Route exact path="/">
-          <Button variant="secondary" onClick={() => toggle(true)}>+</Button>
+          <Button variant="secondary" id="add-playlist" onClick={() => toggle(true)}>+</Button>
           <Search show={showLists} lists={playlists} placeholder="Search a playlist..." />
           <Modal centered show={modal} onHide={() => toggle(false)}>
             <Modal.Header closeButton><Modal.Title>New Playlist</Modal.Title></Modal.Header>

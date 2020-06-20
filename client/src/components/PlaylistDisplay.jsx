@@ -22,6 +22,7 @@ const PlaylistDisplay = (props) => {
       {playlists !== []
         ? playlists.map((playlist, index) => (
           <Link
+            className="btn"
             key={index.toString()}
             to={`/playlist/${playlist.title}${accessToken}`}
           >

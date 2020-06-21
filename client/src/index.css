@@ -19,6 +19,7 @@ code {
   padding: 0 1.5rem;
   margin-left: auto;
   margin-right: auto;
+  /* background-color: #a3bcf9; */
 }
 
 .input-group {
@@ -26,10 +27,12 @@ code {
   justify-content: center;
 }
 
+
 .search-box {
   width: 70%;
   position: relative;
   display: inline-block;
+  margin-top:20px;
   margin-bottom: 20px;
 }
 
@@ -47,22 +50,25 @@ code {
 
 #list-group-item-override {
   display: flex;
+  background-color: #7796CB;
 }
 
 .song-card{
   margin:10px;
-  box-shadow: 0 2px 5px 2px rgba(0,0,0,.04);
 }
+
 
 .song-item {
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color:white
 }
 
 .remove-button{
   height: fit-content;
+  /* background-color: #a3bcf9; */
 }
 
 .playlist-display{
@@ -71,8 +77,11 @@ code {
 }
 
 .playlist-options{
+  display: flex;
+  justify-content: center;
+  height: fit-content;
   flex:1;
-  margin-top:66px;
+  margin-top:85px;
 }
 
 .playlist-tracks{
@@ -82,6 +91,8 @@ code {
 
 .options-card{
   top: 10px;
+  border-radius: 20px;
+  width: fit-content;
 }
 
 .options-card-body{

@@ -124,13 +124,13 @@ const PlaylistForm = (props) => {
             {playlist.songs.map((song) => (
               <Card
                 className="song-card"
-                style={{ position: "static" }}
+                style={{ position: "static",background: "#576490" }}
                 key={song[2]}
               >
                 <Card.Body style={{ display: "flex", padding: "10px" }}>
                   <div className="song-item">
                     <Card.Title>{song[0]}</Card.Title>
-                    <Card.Text>{song[1].join(", ")}</Card.Text>
+                    <Card.Text style={{color:"#a3bcf9 "}}>{song[1].join(", ")}</Card.Text>
                   </div>
                   <Button
                     className="remove-button"
@@ -143,10 +143,10 @@ const PlaylistForm = (props) => {
             ))}
           </div>
           <div className="playlist-options">
-            <Card className="options-card" style={{ position: "sticky" }}>
+            <Card className="options-card" style={{ position: "sticky",background: "#576490"}}>
               <Card.Body className="options-card-body">
                 <Card.Title>
-                  <h2>{playlist.title}</h2>
+                  <h2 style={{color:"white"}}>{playlist.title}</h2>
                 </Card.Title>
                 <Button className="options-button" onClick={() => savePlaylist()}>Save Playlist</Button>
                 <Button className="options-button" id="spotify-button" onClick={savePlaylistOnSpotify}>

@@ -1,10 +1,16 @@
-body {
+body, html {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #7796CB;
+  overflow: hidden;
 }
 
 code {
@@ -19,6 +25,7 @@ code {
   padding: 0 1.5rem;
   margin-left: auto;
   margin-right: auto;
+  /* background-color: #a3bcf9; */
 }
 
 .input-group {
@@ -26,10 +33,12 @@ code {
   justify-content: center;
 }
 
+
 .search-box {
   width: 70%;
   position: relative;
   display: inline-block;
+  margin-top:20px;
   margin-bottom: 20px;
 }
 
@@ -47,13 +56,25 @@ code {
 
 #list-group-item-override {
   display: flex;
+  background-color: #7796CB;
 }
+
+.song-card{
+  margin:10px;
+}
+
 
 .song-item {
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color:white
+}
+
+.remove-button{
+  height: fit-content;
+  /* background-color: #a3bcf9; */
 }
 
 .playlist-display{
@@ -62,22 +83,16 @@ code {
 }
 
 .playlist-options{
+  display: flex;
+  justify-content: center;
+  height: fit-content;
   flex:1;
-  margin-top:56px;
+  margin-top:85px;
 }
 
 .playlist-tracks{
   flex:2;
   margin-right: 20px;
-}
-
-body, html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  /* background-color: #A3BCF9; */
-  background-color: #7796CB;
 }
 
 /* root */
@@ -129,3 +144,23 @@ body, html {
   background-color: #576490;
 }
 
+.options-card{
+  top: 10px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.options-card-body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.options-button{
+  width:fit-content;
+  margin:5px;
+}
+
+#spotify-button{
+  background-color: #1DB954;
+}

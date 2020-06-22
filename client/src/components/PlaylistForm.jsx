@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from "react";
-import { InputGroup, Button, Card } from "react-bootstrap";
-import SpotifyWebApi from "spotify-web-api-js";
-import AutoSearch from "./AutoSearch";
-import { getUserId, getHashParams } from "./util/spotify";
+import React, { useState, useEffect } from 'react';
+import { InputGroup, Button, Card } from 'react-bootstrap';
+import SpotifyWebApi from 'spotify-web-api-js';
+import AutoSearch from './AutoSearch';
+import { getUserId, getHashParams } from './util/spotify';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -21,7 +21,7 @@ const PlaylistForm = (props) => {
       } catch (error) {
         console.error(error);
       }
-    })();
+    }());
   }, []);
 
   const savePlaylist = () => {
@@ -30,19 +30,19 @@ const PlaylistForm = (props) => {
         const response = await fetch(
           `http://${window.location.host}/playlists/${playlist.title}`,
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             // eslint-disable-next-line no-underscore-dangle
             body: JSON.stringify({ songs: playlist.songs }),
-          }
+          },
         );
         console.log(await response.json());
       } catch (error) {
         console.error(error);
       }
-    })();
+    }());
   };
 
   // Saves the playlist to a user's spotify account if they're logged in.
@@ -59,7 +59,7 @@ const PlaylistForm = (props) => {
       const spotifyRes = await spotifyApi.getUserPlaylists(userId);
       const playlistNames = spotifyRes.items.map((item) => item.name);
       const existingPlaylistName = playlistNames.find(
-        (spotifyplaylistTitle) => spotifyplaylistTitle === playlistName
+        (spotifyplaylistTitle) => spotifyplaylistTitle === playlistName,
       );
       // If playlist name doesnt exist in spotify account, create playlist and get id otherwise use current playlist id
       if (!existingPlaylistName) {
@@ -68,12 +68,12 @@ const PlaylistForm = (props) => {
         });
         playlistId = res.id;
         await spotifyApi.addTracksToPlaylist(playlistId, uriArray);
-        console.log("Created new playlist");
+        console.log('Created new playlist');
       } else {
         const playlistIds = spotifyRes.items.map((item) => item.id);
         playlistId = playlistIds[0];
         await spotifyApi.replaceTracksInPlaylist(playlistId, uriArray);
-        console.log("New tracks added");
+        console.log('New tracks added');
       }
     } catch (error) {
       console.log(error.message);
@@ -88,7 +88,7 @@ const PlaylistForm = (props) => {
     let { songs } = playlist;
     if (songs.some((x) => x[2] === uuid)) {
       // eslint-disable-next-line no-alert
-      alert("Calm down. Choose a different song.");
+      alert('Calm down. Choose a different song.');
       return;
     }
     songs = [...songs, [currentSong, artists, uuid, uri]];
@@ -124,13 +124,13 @@ const PlaylistForm = (props) => {
             {playlist.songs.map((song) => (
               <Card
                 className="song-card"
-                style={{ position: "static",background: "#576490" }}
+                style={{ position: 'static', background: '#576490' }}
                 key={song[2]}
               >
-                <Card.Body style={{ display: "flex", padding: "10px" }}>
+                <Card.Body style={{ display: 'flex', padding: '10px' }}>
                   <div className="song-item">
                     <Card.Title>{song[0]}</Card.Title>
-                    <Card.Text style={{color:"#a3bcf9 "}}>{song[1].join(", ")}</Card.Text>
+                    <Card.Text style={{ color: '#a3bcf9 ' }}>{song[1].join(', ')}</Card.Text>
                   </div>
                   <Button
                     className="remove-button"
@@ -143,10 +143,10 @@ const PlaylistForm = (props) => {
             ))}
           </div>
           <div className="playlist-options">
-            <Card className="options-card" style={{ position: "sticky",background: "#576490"}}>
+            <Card className="options-card" style={{ position: 'sticky', background: '#576490' }}>
               <Card.Body className="options-card-body">
                 <Card.Title>
-                  <h2 style={{color:"white"}}>{playlist.title}</h2>
+                  <h2 style={{ color: 'white' }}>{playlist.title}</h2>
                 </Card.Title>
                 <Button className="options-button" onClick={() => savePlaylist()}>Save Playlist</Button>
                 <Button className="options-button" id="spotify-button" onClick={savePlaylistOnSpotify}>

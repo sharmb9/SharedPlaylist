@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-// import { Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { FormControl } from 'react-bootstrap';
 import { getHashParams } from './util/spotify';
@@ -61,16 +61,16 @@ const AutoSearch = (props) => {
     <ul className="autosearch-list-group">
       {songsState.suggestedSongs.map((song, index) => (
         <li className="list-group-item" id="list-group-item-override" key={songsState.ids[index]}>
-          <div className="song-item">
+          <div className="song-item" id="autosearch-song-item">
           {`${song}-${songsState.artists[index].join(',')}`}
           </div>
-          <button
+          <Button
             type="submit"
             className="addsong-button"
             onClick={() => onAdd(songsState, index)}
           >
-            Add song
-          </button>
+            +
+          </Button>
         </li>
       ))}
     </ul>

@@ -122,13 +122,20 @@ const PlaylistForm = (props) => {
               </InputGroup>
             </div>
             {playlist.songs.map((song) => (
-              <Card style={{ position: "static" }} key={song[2]}>
-                <Card.Body style={{ display: "flex" }}>
+              <Card
+                className="song-card"
+                style={{ position: "static",background: "#576490" }}
+                key={song[2]}
+              >
+                <Card.Body style={{ display: "flex", padding: "10px" }}>
                   <div className="song-item">
                     <Card.Title>{song[0]}</Card.Title>
-                    <Card.Text>{song[1].join(", ")}</Card.Text>
+                    <Card.Text style={{color:"#a3bcf9 "}}>{song[1].join(", ")}</Card.Text>
                   </div>
-                  <Button style={{height:"fit-content"}} variant="danger" onClick={() => removeSong(song[2])}>
+                  <Button
+                    className="remove-button"
+                    onClick={() => removeSong(song[2])}
+                  >
                     X
                   </Button>
                 </Card.Body>
@@ -136,13 +143,13 @@ const PlaylistForm = (props) => {
             ))}
           </div>
           <div className="playlist-options">
-            <Card style={{ position: "sticky", top: "1px" }}>
-              <Card.Body>
+            <Card className="options-card" style={{ position: "sticky",background: "#576490"}}>
+              <Card.Body className="options-card-body">
                 <Card.Title>
-                  <h2>{playlist.title}</h2>
+                  <h2 style={{color:"white"}}>{playlist.title}</h2>
                 </Card.Title>
-                <Button onClick={() => savePlaylist()}>Save Playlist</Button>
-                <Button bsClass="btn" onClick={savePlaylistOnSpotify}>
+                <Button className="options-button" onClick={() => savePlaylist()}>Save Playlist</Button>
+                <Button className="options-button" id="spotify-button" onClick={savePlaylistOnSpotify}>
                   Save playlist on Spotify
                 </Button>
               </Card.Body>

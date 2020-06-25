@@ -161,6 +161,23 @@ code {
   margin:5px;
 }
 
-#spotify-button{
+#spotify-button {
   background-color: #1DB954;
+}
+
+/* Modal */
+.modal-content {
+  background-color: black;
+  color: #576490;
+}
+
+.modal-footer .btn {
+  /* background-color: #576490; */
+  background-color: #7796CB;
+  border-color: #7796CB;
+}
+
+.modal-footer .btn:hover {
+  background-color: #576490;
+  border-color: #576490;
 }

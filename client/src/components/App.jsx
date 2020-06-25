@@ -7,18 +7,20 @@ import PlaylistDisplay from './PlaylistDisplay';
 import PlaylistForm from './PlaylistForm';
 
 async function createList(title) {
-  try {
-    const response = await fetch(`http://${window.location.host}/playlists/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ title: title.current.value, author: 'Hard Coded' }),
-    });
-    console.log(await response.json().message);
-    window.location.href = `/playlist/${title.current.value}${window.location.hash}`;
-  } catch (error) {
-    console.error(error);
+  if (title) {
+    try {
+      const response = await fetch(`http://${window.location.host}/playlists/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: title.current.value, author: 'Hard Coded' }),
+      });
+      console.log(await response.json().message);
+      window.location.href = `/playlist/${title.current.value}${window.location.hash}`;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
@@ -55,9 +57,15 @@ const App = () => {
           <Button variant="secondary" id="add-playlist" onClick={() => toggle(true)}>+</Button>
           <Search show={showLists} lists={playlists} placeholder="Search a playlist..." />
           <Modal centered show={modal} onHide={() => toggle(false)}>
-            <Modal.Header closeButton><Modal.Title>New Playlist</Modal.Title></Modal.Header>
-            <Modal.Body><FormControl ref={title} placeholder="Title" /></Modal.Body>
-            <Modal.Footer><Button onClick={() => createList(title)}>Create</Button></Modal.Footer>
+            <Modal.Header closeButton>
+              <Modal.Title>Create a New Playlist</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <FormControl ref={title} placeholder="Enter a title..." required />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={() => createList(title)}>Create</Button>
+            </Modal.Footer>
           </Modal>
           <PlaylistDisplay playlists={shownlists} />
         </Route>

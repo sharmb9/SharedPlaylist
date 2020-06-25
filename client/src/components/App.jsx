@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 // noinspection ES6CheckImport
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Modal, Button, FormControl } from 'react-bootstrap';
+import {
+  Modal, Button, FormControl, Form, InputGroup,
+} from 'react-bootstrap';
 import Search from './Search';
 import PlaylistDisplay from './PlaylistDisplay';
 import PlaylistForm from './PlaylistForm';
 
 async function createList(title) {
-  if (title) {
+  if (title.current.value !== '') {
     try {
       const response = await fetch(`http://${window.location.host}/playlists/`, {
         method: 'POST',
@@ -23,6 +25,7 @@ async function createList(title) {
     }
   }
 }
+
 
 /** *
  * The App is the main component that holds all of the other components.
@@ -60,12 +63,18 @@ const App = () => {
             <Modal.Header closeButton>
               <Modal.Title>Create a New Playlist</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              <FormControl ref={title} placeholder="Enter a title..." required />
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={() => createList(title)}>Create</Button>
-            </Modal.Footer>
+            <Form>
+              <Form.Group>
+                <Modal.Body>
+                  <InputGroup>
+                    <FormControl required type="text" ref={title} placeholder="Enter a title..." />
+                  </InputGroup>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button type="submit" onClick={() => createList(title)}>Create</Button>
+                </Modal.Footer>
+              </Form.Group>
+            </Form>
           </Modal>
           <PlaylistDisplay playlists={shownlists} />
         </Route>

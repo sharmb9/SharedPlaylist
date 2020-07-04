@@ -137,6 +137,7 @@ code {
 .playlist-card {
   background-color: #F5F5F5;
   color: #576490;
+  min-width: 200px;
 }
 
 #delete {

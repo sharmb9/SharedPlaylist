@@ -22,6 +22,7 @@ const PlaylistForm = (props) => {
         console.error(error);
       }
     }());
+    // eslint-disable-next-line
   }, []);
 
   const savePlaylist = () => {
@@ -117,7 +118,7 @@ const PlaylistForm = (props) => {
         <div className="playlist-display">
           <div className="playlist-tracks">
             <div className="search">
-              <InputGroup bsClass="input-group">
+              <InputGroup className="input-group">
                 <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
               </InputGroup>
             </div>

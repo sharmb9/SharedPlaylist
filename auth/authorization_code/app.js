@@ -1,10 +1,12 @@
+const config = require('config');
+
 const express = require('express'); // Express web server framework
 const router = express.Router()
 const request = require('request'); // "Request" library
 const querystring = require('querystring');
 
-const client_id = 'client_id'; // Your client id
-const client_secret = 'client_secret'; // Your secret
+const client_id = config.get('client_id') // Your client id
+const client_secret = config.get('client_secret'); // Your secret
 const stateKey = 'spotify_auth_state';
 
 /**

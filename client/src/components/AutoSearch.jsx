@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-// import { Button } from 'react-bootstrap';
+import { Button, FormControl } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-js';
-import { FormControl } from 'react-bootstrap';
+
 import { getHashParams } from './util/spotify';
 
 
@@ -34,7 +34,7 @@ const AutoSearch = (props) => {
       }
       try {
         if (searchQuery) {
-          const res = await spotifyApi.search(searchQuery, ['track'], {limit:7});
+          const res = await spotifyApi.search(searchQuery, ['track'], { limit: 7 });
           const songs = res.tracks.items.map((item) => item.name);
           const ids = res.tracks.items.map((item) => item.id);
           const artistsArray = res.tracks.items.map((item) => item.artists);
@@ -61,16 +61,16 @@ const AutoSearch = (props) => {
     <ul className="autosearch-list-group">
       {songsState.suggestedSongs.map((song, index) => (
         <li className="list-group-item" id="list-group-item-override" key={songsState.ids[index]}>
-          <div className="song-item">
-          {`${song}-${songsState.artists[index].join(',')}`}
+          <div className="song-item" id="autosearch-song-item">
+            {`${song}-${songsState.artists[index].join(',')}`}
           </div>
-          <button
+          <Button
             type="submit"
             className="addsong-button"
             onClick={() => onAdd(songsState, index)}
           >
-            Add song
-          </button>
+            +
+          </Button>
         </li>
       ))}
     </ul>
@@ -85,7 +85,7 @@ const AutoSearch = (props) => {
         placeholder="Search a song..."
         name="searchQuery"
       />
-      {songsState.suggestedSongs && searchQuery ? <AutoSearchList /> : <div></div>}
+      {songsState.suggestedSongs && searchQuery ? <AutoSearchList /> : <div />}
     </div>
   );
 };

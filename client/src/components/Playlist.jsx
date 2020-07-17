@@ -22,10 +22,10 @@ const deletePlaylistById = async (id) => {
 const Playlist = (props) => {
   const { playlist } = props;
   return (
-    <Card>
-      <Card.Body>
+    <Card className="playlist-card">
+      <Card.Body className="playlist-card m-0">
         {/* eslint-disable-next-line no-underscore-dangle */}
-        <Button className="float-right" variant="danger" onClick={() => deletePlaylistById(playlist._id)}>✗</Button>
+        <Button className="float-right" id="delete" onClick={() => deletePlaylistById(playlist._id)}>✗</Button>
         <h2>{playlist.title || 'Outdated document entry'}</h2>
         <h4>{playlist.author}</h4>
       </Card.Body>

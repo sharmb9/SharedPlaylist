@@ -6,9 +6,9 @@ const request = require('request'); // "Request" library
 const querystring = require('querystring');
 
 // noinspection JSUnresolvedFunction
-const client_id = config.get('client_id') // Your client id
+const client_id = config.get('client_id') || process.env.client_id; // Your client id
 // noinspection JSUnresolvedFunction
-const client_secret = config.get('client_secret'); // Your secret
+const client_secret = config.get('client_secret') || process.env.client_secret; // Your secret
 const stateKey = 'spotify_auth_state';
 
 /**
@@ -96,7 +96,7 @@ router.get('/callback', function(req, res) {
             // noinspection JSUnresolvedVariable
             res.cookie('display_name', body.display_name);
             // we can also pass the token to the browser to make requests from there
-            res.redirect(`http://${req.get('host').split(':')[0]}:${process.env.PORT || 3000}/#` +
+            res.redirect(`http://${req.get('host')}/#` +
               querystring.stringify({
                 access_token: access_token,
                 refresh_token: refresh_token

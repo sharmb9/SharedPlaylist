@@ -52,7 +52,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Button className="btn" id="connect-btn" href={`http://${window.location.hostname}:${process.env.PORT || 8080}/connect/${window.location.hash}`}>
+      <Button className="btn" id="connect-btn" href={`http://${window.location.host}/connect/${window.location.hash}`}>
         {window.location.hash.includes('access_token=') ? document.cookie.split('_name=').pop().split(';')[0] : 'Connect to Spotify'}
       </Button>
       <Router>

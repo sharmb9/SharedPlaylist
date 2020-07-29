@@ -161,6 +161,7 @@ const PlaylistForm = (props) => {
         <div className="no-playlist">
           <h1>{playlist.title}</h1>
           <h5>Add songs to this playlist.</h5>
+          <AutoSearch onAdd={(songs, id) => addSong(songs, id)} />
         </div>
       )}
     </div>

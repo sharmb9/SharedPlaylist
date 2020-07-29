@@ -23,14 +23,14 @@ db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('connected to database'))
 
 // Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
+if (env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));
-  
+
     app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
   }
 
-const PORT = process.env.PORT || 8080
+const PORT = env.PORT || 8080
 app.listen(PORT, () => console.log(`server started on port ${PORT}`))

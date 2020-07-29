@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.9.17",
+    "process": "^0.11.10",
     "react-router-dom": "^5.2.0",
     "request": "^2.88.2"
   },

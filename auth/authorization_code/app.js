@@ -5,7 +5,9 @@ const router = express.Router()
 const request = require('request'); // "Request" library
 const querystring = require('querystring');
 
+// noinspection JSUnresolvedFunction
 const client_id = config.get('client_id') // Your client id
+// noinspection JSUnresolvedFunction
 const client_secret = config.get('client_secret'); // Your secret
 const stateKey = 'spotify_auth_state';
 
@@ -25,6 +27,10 @@ const generateRandomString = function (length) {
 
 router.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html')
+})
+
+router.get('/style.css', function(req, res) {
+  res.sendFile('client/src/index.css', {'root': './'})
 })
 
 router.get('/login', function(req, res) {

@@ -17,7 +17,7 @@ app.use('/playlists', playlistRouter)
 app.use('/connect', spotifyAuth)
 app.use(bodyParser.urlencoded({ extended: true }))
 
-mongoose.connect('mongodb+srv://arcturus:arcturus123@sharedplaylist-vwicm.mongodb.net/<dbname>?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(env.MONGODB_URI || 'mongodb+srv://arcturus:arcturus123@sharedplaylist-vwicm.mongodb.net/<dbname>?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true })
 const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('connected to database'))

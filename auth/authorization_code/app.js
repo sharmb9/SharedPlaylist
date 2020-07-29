@@ -96,7 +96,7 @@ router.get('/callback', function(req, res) {
             // noinspection JSUnresolvedVariable
             res.cookie('display_name', body.display_name);
             // we can also pass the token to the browser to make requests from there
-            res.redirect(`http://${req.get('host').split(':')[0]}:3000/#` +
+            res.redirect(`http://${req.get('host').split(':')[0]}:${process.env.PORT || 3000}/#` +
               querystring.stringify({
                 access_token: access_token,
                 refresh_token: refresh_token

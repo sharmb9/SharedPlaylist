@@ -1,6 +1,6 @@
 # SharedPlaylist 🎵
 
-SharedPlaylist is a MERN stack application that uses Spotify API to allows users to create collaborative plalylists on spotify.
+SharedPlaylist is a MERN stack application that uses Spotify API to allow users to create collaborative plalylists on spotify.
 
 ### See it live
 
